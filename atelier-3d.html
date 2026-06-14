@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MaxArt — The Atelier | Maxine Orndorff Gregory</title>
+<meta name="description" content="A 3D virtual boutique of hand-beaded purses by Maxine Orndorff Gregory — each displayed in its own glass vitrine. Zoom in to inspect the beadwork.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#8a6a2f;
+    --gold-bright:#c8a25e;
+    --ink:#2b231a;
+    --champagne:#f4eee2;
+    --cream:#faf6ee;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ height:100%; }
+  body{
+    background:var(--champagne);
+    color:var(--ink);
+    font-family:'Lato',sans-serif;
+    overflow:hidden;
+  }
+  body.mode-2d{ overflow:auto; }
+
+  /* ---------- Top bar ---------- */
+  #topbar{
+    position:fixed; top:0; left:0; right:0; z-index:40;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 20px;
+    background:linear-gradient(to bottom, rgba(248,243,233,.94), rgba(248,243,233,0));
+    pointer-events:none;
+  }
+  #topbar > *{ pointer-events:auto; }
+  .brand{
+    font-family:'Playfair Display',serif;
+    font-size:1.15rem; letter-spacing:.04em; color:var(--ink);
+    text-decoration:none; white-space:nowrap;
+  }
+  .brand em{ color:var(--gold); font-style:normal; }
+  .backlink{
+    color:var(--gold); text-decoration:none; font-size:.85rem;
+    letter-spacing:.08em; text-transform:uppercase;
+    border:1px solid rgba(138,106,47,.5); padding:7px 14px; border-radius:2px;
+    background:rgba(250,246,238,.7); transition:background .25s,color .25s;
+  }
+  .backlink:hover{ background:var(--gold); color:var(--cream); }
+  #counter{
+    font-size:.85rem; letter-spacing:.12em; color:rgba(43,35,26,.7);
+    min-width:64px; text-align:center;
+  }
+
+  /* ---------- Nav controls ---------- */
+  #navctl{
+    position:fixed; bottom:22px; left:50%; transform:translateX(-50%);
+    z-index:40; display:flex; gap:12px; align-items:center;
+  }
+  .navbtn{
+    background:rgba(250,246,238,.85); color:var(--ink);
+    border:1px solid rgba(138,106,47,.55); border-radius:2px;
+    font-family:'Lato',sans-serif; font-size:.9rem; letter-spacing:.1em;
+    padding:12px 22px; cursor:pointer; transition:background .25s,color .25s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .navbtn:hover{ background:var(--gold); color:var(--cream); }
+  #freelookBtn{ font-size:.72rem; padding:10px 14px; opacity:.85; }
+  #freelookBtn.active{ opacity:1; border-color:var(--gold); color:var(--gold); font-weight:700; }
+
+  #hint{
+    position:fixed; bottom:78px; left:50%; transform:translateX(-50%);
+    z-index:39; font-size:.8rem; letter-spacing:.1em; color:rgba(43,35,26,.55);
+    text-transform:uppercase; pointer-events:none; transition:opacity 1s;
+    text-align:center; padding:0 16px;
+  }
+
+  /* ---------- Details panel ---------- */
+  #panel{
+    position:fixed; z-index:45;
+    right:24px; top:50%; transform:translateY(-50%) translateX(16px);
+    width:min(330px, calc(100vw - 48px));
+    background:rgba(250,246,238,.95);
+    border:1px solid rgba(138,106,47,.45); border-radius:3px;
+    padding:26px 26px 22px;
+    opacity:0; visibility:hidden; transition:opacity .4s, transform .4s, visibility .4s;
+    backdrop-filter:blur(6px);
+    box-shadow:0 18px 50px rgba(80,60,30,.18);
+  }
+  #panel.open{ opacity:1; visibility:visible; transform:translateY(-50%) translateX(0); }
+  #panel h2{
+    font-family:'Playfair Display',serif; font-weight:600;
+    font-size:1.45rem; line-height:1.25; color:var(--ink); margin-bottom:10px;
+  }
+  #panel .rule{ width:42px; height:1px; background:var(--gold-bright); margin-bottom:14px; }
+  #panel .medium{ font-size:.88rem; font-weight:300; color:rgba(43,35,26,.8); margin-bottom:8px; }
+  #panel .status{ font-size:.82rem; letter-spacing:.14em; text-transform:uppercase; margin-bottom:18px; }
+  #panel .status.sold{ color:#a3531c; }
+  #panel .status.available{ color:var(--gold); }
+  #panel .actions{ display:flex; gap:10px; flex-wrap:wrap; }
+  #panel a.inquire{
+    display:inline-block; color:var(--cream); background:var(--gold);
+    text-decoration:none; font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    padding:10px 20px; border-radius:2px; transition:opacity .25s;
+  }
+  #panel a.inquire:hover{ opacity:.85; }
+  #panel button.zoombtn{
+    background:none; color:var(--gold); cursor:pointer;
+    border:1px solid rgba(138,106,47,.55); border-radius:2px;
+    font-family:'Lato',sans-serif; font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    padding:10px 18px; transition:background .25s,color .25s;
+  }
+  #panel button.zoombtn:hover{ background:var(--gold); color:var(--cream); }
+  #panelClose{
+    position:absolute; top:10px; right:12px;
+    background:none; border:none; color:rgba(43,35,26,.55);
+    font-size:1.3rem; cursor:pointer; line-height:1; padding:6px;
+  }
+  #panelClose:hover{ color:var(--gold); }
+  @media (max-height:520px), (max-width:760px){
+    #panel{ top:auto; bottom:78px; right:50%; transform:translate(50%, 12px); }
+    #panel.open{ transform:translate(50%, 0); }
+  }
+
+  /* ---------- Beadwork zoom overlay ---------- */
+  #zoom{
+    position:fixed; inset:0; z-index:70;
+    background:rgba(34,28,20,.96);
+    display:none; overflow:hidden; touch-action:none;
+    cursor:grab;
+  }
+  #zoom.open{ display:block; }
+  #zoom.panning{ cursor:grabbing; }
+  #zoomImg{
+    position:absolute; left:50%; top:50%;
+    max-width:92vw; max-height:82vh;
+    transform:translate(-50%,-50%);
+    user-select:none; -webkit-user-drag:none;
+    box-shadow:0 30px 90px rgba(0,0,0,.6);
+    will-change:transform;
+  }
+  #zoomTitle{
+    position:absolute; top:18px; left:24px; z-index:2;
+    font-family:'Playfair Display',serif; font-size:1.1rem; color:#f1e8d8;
+    letter-spacing:.04em; pointer-events:none;
+    text-shadow:0 2px 8px rgba(0,0,0,.6);
+  }
+  #zoomHint{
+    position:absolute; bottom:20px; left:50%; transform:translateX(-50%); z-index:2;
+    font-size:.75rem; letter-spacing:.14em; text-transform:uppercase;
+    color:rgba(241,232,216,.65); pointer-events:none; text-align:center; padding:0 16px;
+  }
+  #zoomClose{
+    position:absolute; top:14px; right:18px; z-index:2;
+    background:rgba(250,246,238,.12); border:1px solid rgba(241,232,216,.4);
+    color:#f1e8d8; font-size:1.4rem; line-height:1; padding:8px 14px;
+    border-radius:2px; cursor:pointer; transition:background .25s;
+  }
+  #zoomClose:hover{ background:rgba(200,162,94,.45); }
+
+  /* ---------- Loader ---------- */
+  #loader{
+    position:fixed; inset:0; z-index:60; background:var(--champagne);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:18px; transition:opacity .8s; }
+  #loader.done{ opacity:0; pointer-events:none; }
+  #loader h1{ font-family:'Playfair Display',serif; font-weight:400; font-size:1.6rem; letter-spacing:.06em; color:var(--ink); }
+  #loader h1 em{ color:var(--gold); font-style:normal; }
+  #loadbar{ width:200px; height:1px; background:rgba(138,106,47,.2); }
+  #loadbar i{ display:block; height:100%; width:0%; background:var(--gold); transition:width .3s; }
+  #loader p{ font-size:.75rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(43,35,26,.5); }
+
+  canvas#gl{ display:block; position:fixed; inset:0; z-index:1; touch-action:none; }
+
+  /* ---------- 2D fallback: champagne vitrine grid ---------- */
+  #salon2d{ display:none; }
+  body.mode-2d #salon2d{
+    display:block; padding:96px 5vw 80px;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(200,162,94,.12), transparent 70%),
+      var(--champagne);
+    min-height:100vh;
+  }
+  body.mode-2d #navctl, body.mode-2d #hint, body.mode-2d #counter, body.mode-2d #panel{ display:none; }
+  body.mode-2d #topbar{ background:rgba(248,243,233,.97); border-bottom:1px solid rgba(138,106,47,.25); }
+  #salon2d .intro{ text-align:center; max-width:620px; margin:0 auto 56px; }
+  #salon2d .intro h1{ font-family:'Playfair Display',serif; font-weight:400; font-size:clamp(1.6rem,4vw,2.4rem); margin-bottom:12px; }
+  #salon2d .intro h1 em{ color:var(--gold); font-style:normal; }
+  #salon2d .intro p{ font-weight:300; color:rgba(43,35,26,.7); font-size:.95rem; line-height:1.6; }
+  #salon2d .grid{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:52px 36px; max-width:1280px; margin:0 auto;
+  }
+  .vitrine{ text-align:center; }
+  .vitrine figure{ margin:0 0 16px; }
+  .vitrine .case{
+    display:inline-block; padding:16px; background:#fffdf8;
+    border:1px solid rgba(176,141,87,.5);
+    box-shadow:0 16px 40px rgba(90,68,32,.16), inset 0 0 30px rgba(200,162,94,.08);
+    position:relative;
+  }
+  .vitrine .case::after{
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(120deg, transparent 38%, rgba(255,255,255,.4) 50%, transparent 62%);
+  }
+  .vitrine .matb{ display:block; padding:8px; background:#f3ecdd; border:1px solid rgba(200,162,94,.55); }
+  .vitrine button.imgbtn{ display:block; border:none; background:none; padding:0; cursor:zoom-in; }
+  .vitrine img{ display:block; max-width:100%; height:auto; }
+  .vitrine h3{ font-family:'Playfair Display',serif; font-weight:600; font-size:1.05rem; margin-bottom:6px; }
+  .vitrine .medium{ font-size:.8rem; font-weight:300; color:rgba(43,35,26,.75); margin-bottom:4px; }
+  .vitrine .status{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; margin-bottom:8px; }
+  .vitrine .status.sold{ color:#a3531c; }
+  .vitrine .status.available{ color:var(--gold); }
+  .vitrine a{ color:var(--gold); font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; border-bottom:1px solid rgba(138,106,47,.4); }
+</style>
+</head>
+<body>
+
+<header id="topbar">
+  <a class="backlink" href="/concept-cinematic-luxe.html">&larr; Back to site</a>
+  <a class="brand" href="/concept-cinematic-luxe.html">MaxArt — <em>The Atelier</em></a>
+  <div id="counter" aria-live="polite">&nbsp;</div>
+</header>
+
+<div id="loader" role="status">
+  <h1>MaxArt — <em>The Atelier</em></h1>
+  <div id="loadbar"><i></i></div>
+  <p>Polishing the vitrines&hellip;</p>
+</div>
+
+<canvas id="gl" aria-hidden="true"></canvas>
+
+<div id="hint">Scroll or swipe to walk · ← → to look · tap a purse to view</div>
+
+<div id="navctl">
+  <button class="navbtn" id="prevBtn" aria-label="Previous purse">&lsaquo; Prev</button>
+  <button class="navbtn" id="nextBtn" aria-label="Next purse">Next &rsaquo;</button>
+  <button class="navbtn" id="freelookBtn" aria-label="Toggle look-around mode">Look around</button>
+</div>
+
+<aside id="panel" aria-live="polite">
+  <button id="panelClose" aria-label="Close details">&times;</button>
+  <h2 id="pTitle"></h2>
+  <div class="rule"></div>
+  <p class="medium" id="pMedium"></p>
+  <p class="status" id="pStatus"></p>
+  <div class="actions">
+    <a class="inquire" id="pInquire" href="mailto:maxart@pcisys.net">Inquire</a>
+    <button class="zoombtn" id="pZoom" aria-label="Zoom in to inspect the beadwork">&#8981; Zoom in</button>
+  </div>
+</aside>
+
+<!-- Beadwork inspection overlay (shared by 3D and 2D modes) -->
+<div id="zoom" role="dialog" aria-modal="true" aria-label="Beadwork close-up">
+  <img id="zoomImg" src="" alt="">
+  <div id="zoomTitle"></div>
+  <button id="zoomClose" aria-label="Close close-up">&times;</button>
+  <div id="zoomHint">Scroll or pinch to zoom · drag to pan · esc to close</div>
+</div>
+
+<!-- 2D fallback / accessible + crawlable content -->
+<section id="salon2d">
+  <div class="intro">
+    <h1>MaxArt — <em>The Atelier</em></h1>
+    <p>Hand-beaded purses by Maxine Orndorff Gregory, each displayed in its own vitrine. Tap any purse to zoom in and inspect the individual beads and stones.</p>
+  </div>
+  <div class="grid" id="grid2d"></div>
+</section>
+
+<!-- Purse data island (crawlable, single source of truth) -->
+<script type="application/json" id="purses-data">
+[
+ {"img":"imagejpeg_4.jpg",   "title":"Pumpkin Pie",            "detail":"Hand-Beaded Purse with Semi-Precious Stones", "status":"$975"},
+ {"img":"_NZ86667.jpg",      "title":"Stars and Stripes Forever, Semiquincentennial Edition", "detail":"Hand-Beaded Purse", "status":"$850"},
+ {"img":"imagejpeg_2.jpg",   "title":"Romani Elegance",        "detail":"Hand-Beaded Purse", "status":"$700"},
+ {"img":"imagejpeg_1-1.jpg", "title":"Pretty in Pink",         "detail":"Hand-Beaded Purse", "status":"$600"},
+ {"img":"imagejpeg_3.jpg",   "title":"Love is in the Air",     "detail":"Hand-Beaded Purse", "status":"$600"},
+ {"img":"imagejpeg_3-1.jpg", "title":"Grand Dame",             "detail":"Hand-Beaded Purse", "status":"Sold"},
+ {"img":"imagejpeg_1.jpg",   "title":"Jade Elegance",          "detail":"Hand-Beaded Purse", "status":"$750"},
+ {"img":"imagejpeg_2-1.jpg", "title":"Tannenbaum",             "detail":"Hand-Beaded Purse", "status":"$650"},
+ {"img":"imagejpeg_0-1.jpg", "title":"Spring Grass",           "detail":"Hand-Beaded Purse with Semi-Precious Stones", "status":"$850"},
+ {"img":"imagejpeg_0.jpg",   "title":"Ember Sparks",           "detail":"Hand-Beaded Purse", "status":"$750"},
+ {"img":"_NZ86684.jpg",      "title":"Surrender",              "detail":"Hand-Beaded Purse", "status":"$775"},
+ {"img":"_NZ86689.jpg",      "title":"When We Walked in Fields of Gold", "detail":"Hand-Beaded Purse", "status":"$850"},
+ {"img":"_NZ86679.jpg",      "title":"Trepidation",            "detail":"Hand-Beaded Purse", "status":"$700"},
+ {"img":"_NZ86678.jpg",      "title":"Flapper",                "detail":"Hand-Beaded Purse", "status":"Sold"},
+ {"img":"_NZ86676.jpg",      "title":"Winter Wheat",           "detail":"Hand-Beaded Purse", "status":"$800"},
+ {"img":"_NZ86673.jpg",      "title":"Coral Sea",              "detail":"Hand-Beaded Purse", "status":"$650"},
+ {"img":"_NZ86671.jpg",      "title":"Straight Lace",          "detail":"Hand-Beaded Purse", "status":"$850"},
+ {"img":"_NZ86670.jpg",      "title":"Bangles and Beads",      "detail":"Hand-Beaded Purse", "status":"$850"},
+ {"img":"_NZ86665.jpg",      "title":"Are the Stars Out Tonight?", "detail":"Hand-Beaded Purse", "status":"$650"},
+ {"img":"_NZ86664.jpg",      "title":"Peacock's On",           "detail":"Hand-Beaded Purse", "status":"$750"},
+ {"img":"_NZ86660.jpg",      "title":"Fantasy",                "detail":"Hand-Beaded Purse", "status":"Sold"},
+ {"img":"_NZ86657.jpg",      "title":"Beyond This Point There Be Dragons", "detail":"Hand-Beaded Purse", "status":"$850"},
+ {"img":"_NZ86655.jpg",      "title":"Dressed to Kill",        "detail":"Hand-Beaded Purse", "status":"$800"},
+ {"img":"imagejpeg_001.jpg", "title":"Great Pumpkin",          "detail":"Hand-Beaded Purse", "status":"$700"},
+ {"img":"imagejpeg_101.jpg", "title":"Wine Dark Sea",          "detail":"Hand-Beaded Purse", "status":"$800"},
+ {"img":"imagejpeg_201.jpg", "title":"Red Sky in the Morning", "detail":"Hand-Beaded Purse", "status":"$750"},
+ {"img":"imagejpeg_301.jpg", "title":"Winter Grass",           "detail":"Hand-Beaded Purse", "status":"$650"},
+ {"img":"purse-rose-plume.jpg",        "title":"Rose Plume",          "detail":"Hand-Beaded Purse with Semi-Precious Stones", "status":"Sold"},
+ {"img":"purse-imperial-gold.jpg",     "title":"Imperial Gold",       "detail":"Hand-Beaded Purse", "status":"Sold"},
+ {"img":"purse-midnight-bronze.jpg",   "title":"Midnight Bronze",     "detail":"Hand-Beaded Purse", "status":"Sold"},
+ {"img":"purse-moonflower.jpg",        "title":"Moonflower",          "detail":"Hand-Beaded Purse", "status":"Sold"},
+ {"img":"purse-sapphire-and-gold.jpg", "title":"Sapphire and Gold",   "detail":"Hand-Beaded Purse", "status":"Sold"},
+ {"img":"purse-butterfly-meadow.jpg",  "title":"Butterfly Meadow",    "detail":"Hand-Beaded Purse with Semi-Precious Stones", "status":"Sold"}
+]
+</script>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+const PURSES = JSON.parse(document.getElementById('purses-data').textContent);
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- helpers shared by both modes ---------- */
+function statusInfo(s){
+  if (s === 'Sold') return { cls:'sold', text:'Sold' };
+  return { cls:'available', text:'Available — ' + s };
+}
+function mailtoFor(p){
+  return 'mailto:maxart@pcisys.net?subject=' +
+    encodeURIComponent('Inquiry: ' + p.title + ' (' + p.detail + ')');
+}
+function altFor(p){
+  return p.title + ' — hand-beaded purse by Maxine Orndorff Gregory';
+}
+
+/* ---------- beadwork zoom overlay (shared by both modes) ---------- */
+const zoomEl    = document.getElementById('zoom');
+const zoomImg   = document.getElementById('zoomImg');
+const zoomTitle = document.getElementById('zoomTitle');
+let zs = 1, ztx = 0, zty = 0;                 // scale + pan (px from viewport centre)
+const zPointers = new Map();
+let zLastMid = null, zLastDist = 0;
+
+function zoomApply(){
+  zoomImg.style.transform =
+    'translate(calc(-50% + ' + ztx + 'px), calc(-50% + ' + zty + 'px)) scale(' + zs + ')';
+}
+function zoomReset(){ zs = 1; ztx = 0; zty = 0; zoomApply(); }
+function zoomOpen(p){
+  zoomImg.src = p.img;
+  zoomImg.alt = altFor(p);
+  zoomTitle.textContent = p.title;
+  zoomReset();
+  zoomEl.classList.add('open');
+}
+function zoomClose(){
+  zoomEl.classList.remove('open');
+  zPointers.clear(); zLastMid = null;
+}
+function zoomIsOpen(){ return zoomEl.classList.contains('open'); }
+function zoomAt(cx, cy, sNew){
+  sNew = Math.min(9, Math.max(1, sNew));
+  const px = cx - window.innerWidth / 2, py = cy - window.innerHeight / 2;
+  const f = sNew / zs;
+  ztx = px - (px - ztx) * f;
+  zty = py - (py - zty) * f;
+  zs = sNew;
+  if (zs === 1){ ztx = 0; zty = 0; }
+  zoomApply();
+}
+zoomEl.addEventListener('wheel', e => {
+  e.preventDefault();
+  zoomAt(e.clientX, e.clientY, zs * Math.exp(-e.deltaY * 0.0016));
+}, { passive:false });
+zoomEl.addEventListener('pointerdown', e => {
+  e.preventDefault();
+  zoomEl.setPointerCapture(e.pointerId);
+  zPointers.set(e.pointerId, { x:e.clientX, y:e.clientY });
+  zoomEl.classList.add('panning');
+  if (zPointers.size === 2){
+    const [a, b] = [...zPointers.values()];
+    zLastDist = Math.hypot(a.x - b.x, a.y - b.y);
+    zLastMid  = { x:(a.x + b.x)/2, y:(a.y + b.y)/2 };
+  }
+});
+zoomEl.addEventListener('pointermove', e => {
+  if (!zPointers.has(e.pointerId)) return;
+  const prev = zPointers.get(e.pointerId);
+  zPointers.set(e.pointerId, { x:e.clientX, y:e.clientY });
+  if (zPointers.size === 1){                       // drag = pan
+    ztx += e.clientX - prev.x;
+    zty += e.clientY - prev.y;
+    zoomApply();
+  } else if (zPointers.size === 2){                // pinch = zoom about midpoint
+    const [a, b] = [...zPointers.values()];
+    const dist = Math.hypot(a.x - b.x, a.y - b.y);
+    const mid  = { x:(a.x + b.x)/2, y:(a.y + b.y)/2 };
+    if (zLastDist > 0) zoomAt(mid.x, mid.y, zs * (dist / zLastDist));
+    if (zLastMid){ ztx += mid.x - zLastMid.x; zty += mid.y - zLastMid.y; zoomApply(); }
+    zLastDist = dist; zLastMid = mid;
+  }
+});
+function zoomPointerEnd(e){
+  zPointers.delete(e.pointerId);
+  if (zPointers.size < 2){ zLastMid = null; zLastDist = 0; }
+  if (zPointers.size === 0) zoomEl.classList.remove('panning');
+}
+zoomEl.addEventListener('pointerup', zoomPointerEnd);
+zoomEl.addEventListener('pointercancel', zoomPointerEnd);
+zoomEl.addEventListener('dblclick', e => {
+  zoomAt(e.clientX, e.clientY, zs > 1.5 ? 1 : 3.5);
+});
+document.getElementById('zoomClose').addEventListener('click', zoomClose);
+
+/* ---------- 2D fallback vitrine grid (also the accessible content) ---------- */
+function build2DSalon(){
+  const grid = document.getElementById('grid2d');
+  const frag = document.createDocumentFragment();
+  PURSES.forEach((p, i) => {
+    const st = statusInfo(p.status);
+    const el = document.createElement('article');
+    el.className = 'vitrine';
+    el.innerHTML =
+      '<figure><span class="case"><span class="matb">' +
+      '<button class="imgbtn" type="button" aria-label="Zoom in on ' + p.title.replace(/"/g,'&quot;') + '" data-i="' + i + '">' +
+      '<img loading="lazy" src="' + p.img + '" alt="' + altFor(p).replace(/"/g,'&quot;') + '"></button>' +
+      '</span></span></figure>' +
+      '<h3>' + p.title + '</h3>' +
+      '<p class="medium">' + p.detail + '</p>' +
+      '<p class="status ' + st.cls + '">' + st.text + '</p>' +
+      '<a href="' + mailtoFor(p) + '">Inquire</a>';
+    frag.appendChild(el);
+  });
+  grid.appendChild(frag);
+  grid.addEventListener('click', e => {
+    const btn = e.target.closest('button.imgbtn');
+    if (btn) zoomOpen(PURSES[+btn.dataset.i]);
+  });
+}
+
+/* ---------- mode decision ---------- */
+function webglAvailable(){
+  try{
+    const c = document.createElement('canvas');
+    return !!(window.WebGLRenderingContext &&
+      (c.getContext('webgl2') || c.getContext('webgl')));
+  }catch(e){ return false; }
+}
+const tooSmall = Math.min(window.innerWidth, document.documentElement.clientWidth || 1e9) < 620;
+const use3D = webglAvailable() && !reducedMotion && !tooSmall;
+
+if (!use3D){
+  build2DSalon();
+  document.body.classList.add('mode-2d');
+  document.getElementById('gl').remove();
+  document.getElementById('loader').classList.add('done');
+  window.addEventListener('keydown', e => { if (e.key === 'Escape') zoomClose(); });
+} else {
+  build2DSalon();                       // keep for screen readers / SEO
+  document.getElementById('salon2d').setAttribute('hidden','');
+  init3D();
+}
+
+/* ============================================================
+   3D BOUTIQUE
+   ============================================================ */
+async function init3D(){
+  const THREE = await import('three');
+  const { RoomEnvironment } = await import('three/addons/environments/RoomEnvironment.js');
+
+  if ('ontouchstart' in window) document.body.classList.add('touchdevice');
+
+  /* ----- layout constants ----- */
+  const HALL_LEN = 40;            // z: -20 .. +20
+  const HALL_W   = 8.6;           // x: -4.3 .. +4.3
+  const WALL_H   = 4.0;
+  const SPACING  = 2.6;           // pedestal pitch along the aisle
+  const FARZ     = -HALL_LEN/2, NEARZ = HALL_LEN/2;
+  const ROW_X    = 2.95;          // pedestal rows, leaving a wide centre aisle
+
+  const PED_W = 0.62, PED_D = 0.5, PED_H = 1.04;       // pedestal
+  const CASE_W = 0.66, CASE_D = 0.54, CASE_H = 0.8;    // glass case
+  const CASE_CY = PED_H + CASE_H/2;                    // case centre height (~1.44)
+
+  /* ----- renderer / scene / camera ----- */
+  const canvas = document.getElementById('gl');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, powerPreference:'high-performance' });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.08;
+  renderer.shadowMap.enabled = false;
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xf0e8d8);
+  scene.fog = new THREE.Fog(0xf0e8d8, 20, 56);
+
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  scene.environmentIntensity = 0.85;
+  pmrem.dispose();
+
+  const camera = new THREE.PerspectiveCamera(58, window.innerWidth/window.innerHeight, 0.1, 120);
+  const HOME_POS = new THREE.Vector3(0, 1.7, NEARZ - 1.2);
+  const HOME_LOOK = new THREE.Vector3(0, 1.5, FARZ);
+  camera.position.copy(HOME_POS);
+  camera.lookAt(HOME_LOOK);
+
+  /* ----- materials ----- */
+  const wallMat  = new THREE.MeshStandardMaterial({ color:0xeadfca, roughness:0.92, metalness:0.0 });
+  const ceilMat  = new THREE.MeshStandardMaterial({ color:0xf6efe1, roughness:0.95, metalness:0.0 });
+  const floorMat = new THREE.MeshStandardMaterial({ color:0xe9e2d3, roughness:0.14, metalness:0.42, envMapIntensity:1.1 }); // pale marble w/ soft sheen
+  const trimMat  = new THREE.MeshStandardMaterial({ color:0xc8a25e, roughness:0.32, metalness:0.85 });
+  const stoneMat = new THREE.MeshStandardMaterial({ color:0xe3d6bd, roughness:0.5,  metalness:0.05 });  // champagne stone pedestal
+  const stoneDk  = new THREE.MeshStandardMaterial({ color:0xcdbd9e, roughness:0.55, metalness:0.05 });
+  const matGold  = new THREE.MeshStandardMaterial({ color:0xc8a25e, roughness:0.35, metalness:0.8, emissive:0x3a2a0e, emissiveIntensity:0.35 });
+  const glassMat = new THREE.MeshPhysicalMaterial({
+    color:0xffffff, roughness:0.04, metalness:0.0,
+    transparent:true, opacity:0.14, envMapIntensity:1.5,
+    depthWrite:false
+  });
+  const glassEdge = new THREE.LineBasicMaterial({ color:0xd8c9a8, transparent:true, opacity:0.65 });
+  const gleamMat = new THREE.MeshBasicMaterial({
+    color:0xfff7e6, transparent:true, opacity:0,
+    blending:THREE.AdditiveBlending, depthWrite:false, side:THREE.DoubleSide
+  });
+
+  /* ----- room ----- */
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(HALL_W, HALL_LEN), floorMat);
+  floor.rotation.x = -Math.PI/2; scene.add(floor);
+
+  // champagne runner down the centre aisle
+  const runner = new THREE.Mesh(new THREE.PlaneGeometry(2.2, HALL_LEN - 2),
+    new THREE.MeshStandardMaterial({ color:0xdfd2b8, roughness:0.85, metalness:0 }));
+  runner.rotation.x = -Math.PI/2; runner.position.y = 0.005; scene.add(runner);
+
+  const ceil = new THREE.Mesh(new THREE.PlaneGeometry(HALL_W, HALL_LEN), ceilMat);
+  ceil.rotation.x = Math.PI/2; ceil.position.y = WALL_H; scene.add(ceil);
+
+  const sideGeo = new THREE.PlaneGeometry(HALL_LEN, WALL_H);
+  const left = new THREE.Mesh(sideGeo, wallMat);
+  left.rotation.y = Math.PI/2; left.position.set(-HALL_W/2, WALL_H/2, 0); scene.add(left);
+  const right = new THREE.Mesh(sideGeo, wallMat);
+  right.rotation.y = -Math.PI/2; right.position.set(HALL_W/2, WALL_H/2, 0); scene.add(right);
+
+  const endGeo = new THREE.PlaneGeometry(HALL_W, WALL_H);
+  const farW = new THREE.Mesh(endGeo, wallMat);
+  farW.position.set(0, WALL_H/2, FARZ); scene.add(farW);
+  const nearW = new THREE.Mesh(endGeo, wallMat);
+  nearW.rotation.y = Math.PI; nearW.position.set(0, WALL_H/2, NEARZ); scene.add(nearW);
+
+  // gold baseboard + cornice trim lines
+  for (const y of [0.09, WALL_H - 0.35]){
+    for (const sx of [-1, 1]){
+      const t = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.05, HALL_LEN), trimMat);
+      t.position.set(sx*(HALL_W/2 - 0.013), y, 0); scene.add(t);
+    }
+    const t2 = new THREE.Mesh(new THREE.BoxGeometry(HALL_W, 0.05, 0.025), trimMat);
+    t2.position.set(0, y, FARZ + 0.013); scene.add(t2);
+  }
+
+  /* ----- lighting (bright daylight + a few warm accents; no shadows) ----- */
+  scene.add(new THREE.AmbientLight(0xffeacc, 1.35));
+  scene.add(new THREE.HemisphereLight(0xfff4e0, 0xcdbb96, 0.85));
+  for (let i = 0; i < 5; i++){
+    const z = FARZ + 4 + i * (HALL_LEN - 8) / 4;
+    const spot = new THREE.SpotLight(0xffe7c2, 38, 15, Math.PI/2.9, 0.7, 1.6);
+    spot.position.set(0, WALL_H - 0.2, z);
+    spot.target.position.set(0, 0.9, z);
+    scene.add(spot); scene.add(spot.target);
+  }
+
+  /* ----- pedestal slots: 12 left, 3 far end, 12 right (a snake, like the gallery) ----- */
+  function slotFor(i){
+    if (i < 12){                                  // left row, walking inward
+      const z = NEARZ - 3.4 - i * SPACING;
+      return { pos:new THREE.Vector3(-ROW_X, 0, z), rotY: Math.PI/2,  normal:new THREE.Vector3(1,0,0) };
+    } else if (i < 15){                           // across the far end
+      const x = (i - 13) * 2.6;                   // -2.6, 0, +2.6
+      return { pos:new THREE.Vector3(x, 0, FARZ + 1.7), rotY: 0, normal:new THREE.Vector3(0,0,1) };
+    } else {                                      // right row, walking back out
+      const z = FARZ + 3.4 + 1.7 + (i - 15) * SPACING;
+      return { pos:new THREE.Vector3(ROW_X, 0, z), rotY: -Math.PI/2, normal:new THREE.Vector3(-1,0,0) };
+    }
+  }
+
+  /* ----- gold name plaque (canvas texture) ----- */
+  function plaqueTexture(title){
+    const c = document.createElement('canvas');
+    c.width = 512; c.height = 128;
+    const x = c.getContext('2d');
+    const grad = x.createLinearGradient(0, 0, 512, 128);
+    grad.addColorStop(0, '#d9b878'); grad.addColorStop(.45, '#b8924c');
+    grad.addColorStop(.6, '#e3c685'); grad.addColorStop(1, '#a8843f');
+    x.fillStyle = grad; x.fillRect(0, 0, 512, 128);
+    x.strokeStyle = 'rgba(80,55,15,.55)'; x.lineWidth = 4;
+    x.strokeRect(10, 10, 492, 108);
+    x.fillStyle = '#3a2a10';
+    x.textAlign = 'center'; x.textBaseline = 'middle';
+    let size = 44;
+    do {
+      x.font = '600 ' + size + 'px "Playfair Display", Georgia, serif';
+      if (x.measureText(title).width <= 460) break;
+      size -= 2;
+    } while (size > 18);
+    x.fillText(title, 256, 66);
+    const tex = new THREE.CanvasTexture(c);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = maxAniso;
+    return tex;
+  }
+
+  /* ----- build one vitrine: pedestal + glass case + lit purse photo + plaque + gleam ----- */
+  const caseGeo = new THREE.BoxGeometry(CASE_W, CASE_H, CASE_D);
+  const caseEdgeGeo = new THREE.EdgesGeometry(caseGeo);
+  const gleams = [];
+
+  function makeVitrine(p, tex){
+    const group = new THREE.Group();
+
+    // pedestal column + base + gold cap
+    const base = new THREE.Mesh(new THREE.BoxGeometry(PED_W + 0.14, 0.07, PED_D + 0.14), stoneDk);
+    base.position.y = 0.035; group.add(base);
+    const col = new THREE.Mesh(new THREE.BoxGeometry(PED_W, PED_H - 0.1, PED_D), stoneMat);
+    col.position.y = 0.07 + (PED_H - 0.1)/2; group.add(col);
+    const cap = new THREE.Mesh(new THREE.BoxGeometry(PED_W + 0.1, 0.03, PED_D + 0.1), trimMat);
+    cap.position.y = PED_H - 0.015; group.add(cap);
+
+    // softly-lit display deck inside the case
+    const deck = new THREE.Mesh(new THREE.BoxGeometry(CASE_W - 0.04, 0.025, CASE_D - 0.04),
+      new THREE.MeshStandardMaterial({ color:0xfdf8ee, roughness:0.6, metalness:0,
+        emissive:0xfff3da, emissiveIntensity:0.45 }));
+    deck.position.y = PED_H + 0.0125; group.add(deck);
+
+    // the purse photo — unlit + untonemapped so the white photo ground reads as
+    // the bright lit interior of the case
+    const img = tex.image;
+    const aspect = img.width / img.height;
+    let phH = CASE_H - 0.14, phW = phH * aspect;
+    const maxW = CASE_W - 0.1;
+    if (phW > maxW){ phW = maxW; phH = phW / aspect; }
+    const photo = new THREE.Mesh(
+      new THREE.PlaneGeometry(phW, phH),
+      new THREE.MeshBasicMaterial({ map:tex, toneMapped:false }));
+    photo.position.set(0, PED_H + 0.03 + phH/2, 0);
+    group.add(photo);
+
+    // thin gold mat border behind the photo sells it as a display
+    const mat = new THREE.Mesh(new THREE.PlaneGeometry(phW + 0.045, phH + 0.045), matGold);
+    mat.position.set(0, photo.position.y, -0.006);
+    group.add(mat);
+    const matBack = new THREE.Mesh(new THREE.PlaneGeometry(phW + 0.075, phH + 0.075),
+      new THREE.MeshStandardMaterial({ color:0xf3ecdd, roughness:0.85 }));
+    matBack.position.set(0, photo.position.y, -0.012);
+    group.add(matBack);
+
+    // glass case + edge highlights
+    const glass = new THREE.Mesh(caseGeo, glassMat);
+    glass.position.y = CASE_CY;
+    glass.renderOrder = 2;
+    group.add(glass);
+    const edges = new THREE.LineSegments(caseEdgeGeo, glassEdge);
+    edges.position.y = CASE_CY;
+    group.add(edges);
+
+    // sparkle gleam strip that sweeps across the glass front
+    if (!reducedMotion){
+      const gleam = new THREE.Mesh(new THREE.PlaneGeometry(0.07, CASE_H * 0.96), gleamMat);
+      gleam.rotation.z = 0.28;
+      gleam.position.set(-0.45, CASE_CY, CASE_D/2 + 0.006);
+      gleam.visible = false;
+      gleam.renderOrder = 3;
+      group.add(gleam);
+      gleams.push(gleam);
+    }
+
+    // gold name plaque on the pedestal face
+    const plq = new THREE.Mesh(new THREE.PlaneGeometry(0.36, 0.09),
+      new THREE.MeshBasicMaterial({ map:plaqueTexture(p.title), toneMapped:false }));
+    plq.position.set(0, 0.84, PED_D/2 + 0.004);
+    group.add(plq);
+
+    return group;
+  }
+
+  /* ----- load textures & place vitrines ----- */
+  const loadbar = document.querySelector('#loadbar i');
+  const manager = new THREE.LoadingManager();
+  manager.onProgress = (u, done, total) => { loadbar.style.width = Math.round(done/total*100) + '%'; };
+  const loader = new THREE.TextureLoader(manager);
+  const maxAniso = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+
+  const placed = new Array(PURSES.length);    // { group, slot, index }
+  const pickMeshes = [];
+  const allTextures = [];
+
+  PURSES.forEach((p, i) => {
+    loader.load(encodeURIComponent(p.img).replace(/%2F/g,'/'), tex => {
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.anisotropy = maxAniso;
+      allTextures.push(tex);
+      const slot = slotFor(i);
+      const g = makeVitrine(p, tex);
+      g.position.copy(slot.pos);
+      g.rotation.y = slot.rotY;
+      scene.add(g);
+      // invisible oversized hit plane → easy tapping
+      const hit = new THREE.Mesh(
+        new THREE.PlaneGeometry(CASE_W + 0.55, PED_H + CASE_H + 0.4),
+        new THREE.MeshBasicMaterial({ visible:false }));
+      hit.position.copy(slot.pos);
+      hit.position.y = (PED_H + CASE_H)/2;
+      hit.position.addScaledVector(slot.normal, CASE_D/2 + 0.1);
+      hit.rotation.y = slot.rotY;
+      hit.userData.index = i;
+      scene.add(hit);
+      pickMeshes.push(hit);
+      placed[i] = { group:g, slot, index:i };
+    },
+    undefined,
+    () => { placed[i] = null; });               // missing image: skip silently
+
+  });
+
+  manager.onLoad = () => {
+    document.getElementById('loader').classList.add('done');
+    needsRender = true;
+  };
+
+  /* ----- camera tweening ----- */
+  let tween = null;        // {t0, dur, fromP, toP, fromQ, toQ}
+  const easeInOut = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2;
+
+  function flyTo(pos, lookAt, dur = 1400){
+    const fromP = camera.position.clone();
+    const fromQ = camera.quaternion.clone();
+    const m = new THREE.Matrix4().lookAt(pos, lookAt, new THREE.Vector3(0,1,0));
+    const toQ = new THREE.Quaternion().setFromRotationMatrix(m);
+    tween = { t0: performance.now(), dur, fromP, toP: pos.clone(), fromQ, toQ };
+    needsRender = true;
+  }
+
+  /* ----- selection / UI ----- */
+  const panel   = document.getElementById('panel');
+  const counter = document.getElementById('counter');
+  const hint    = document.getElementById('hint');
+  let current = -1;
+  let hintShown = true;
+
+  /* ----- rail-walk: camera strolls the aisle centreline, swivels to face the rows ----- */
+  const GLANCE = 1.15;                 // max look angle toward a row (~66°)
+  let strollActive = true;             // true = the rail controller drives the camera
+  let strollZ = HOME_POS.z;            // target position along the aisle
+  let lookYaw = 0, lookYawCur = 0;     // 0 = facing down the aisle; +/- = glance L/R
+  const clampZ = z => THREE.MathUtils.clamp(z, FARZ + 3.6, NEARZ - 1.0);
+  const panelOpen = () => panel.classList.contains('open');
+  const WALK_WHEEL = 0.012, WALK_KEY = 1.6, GLANCE_STEP = 0.55;
+
+  function focusOn(i, dur){
+    if (i < 0) i = PURSES.length - 1;
+    if (i >= PURSES.length) i = 0;
+    if (!placed[i]){                     // image failed to load — skip over it
+      const dir = (i >= current) ? 1 : -1;
+      let j = i;
+      for (let k = 0; k < PURSES.length; k++){
+        j = (j + dir + PURSES.length) % PURSES.length;
+        if (placed[j]) { i = j; break; }
+      }
+      if (!placed[i]) return;
+    }
+    current = i;
+    strollActive = false;            // focus tween takes over until we step back
+    const { pos, normal } = placed[i].slot;
+    const caseCentre = pos.clone(); caseCentre.y = CASE_CY;
+    const camPos = caseCentre.clone().addScaledVector(normal, 1.55);
+    camPos.y = 1.5;
+    flyTo(camPos, caseCentre, dur ?? 1400);
+    showPanel(i);
+    counter.textContent = (i + 1) + ' / ' + PURSES.length;
+    if (hintShown){ hint.style.opacity = '0'; hintShown = false; }
+  }
+
+  function showPanel(i){
+    const p = PURSES[i];
+    const st = statusInfo(p.status);
+    document.getElementById('pTitle').textContent = p.title;
+    document.getElementById('pMedium').textContent = p.detail;
+    const stEl = document.getElementById('pStatus');
+    stEl.textContent = st.text;
+    stEl.className = 'status ' + st.cls;
+    document.getElementById('pInquire').href = mailtoFor(p);
+    panel.classList.add('open');
+  }
+
+  // Hand the camera back to the rail at the current spot, turning to face down the aisle.
+  function closeFocus(){
+    panel.classList.remove('open');
+    counter.textContent = ' ';                  // clear the stale "n / 27" when strolling
+    tween = null;
+    strollActive = true;
+    strollZ = clampZ(camera.position.z);
+    lookYaw = 0;                                      // face down the aisle, ready to walk
+    const e = new THREE.Euler().setFromQuaternion(camera.quaternion, 'YXZ');
+    lookYawCur = e.y;                                 // ...but turn there smoothly
+    needsRender = true;
+  }
+  // A walk input while a purse is open: step back onto the rail first, then walk.
+  function walkBy(dz){
+    if (panelOpen() || !strollActive) closeFocus();
+    strollZ = clampZ(strollZ + dz);
+    needsRender = true;
+  }
+  function glanceBy(dy){
+    if (panelOpen()) return;                          // ←/→ inspect adjacent when focused
+    lookYaw = THREE.MathUtils.clamp(lookYaw + dy, -yawMax(), yawMax());
+    needsRender = true;
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', () => focusOn(current < 0 ? 0 : current - 1));
+  document.getElementById('nextBtn').addEventListener('click', () => focusOn(current < 0 ? 0 : current + 1));
+  document.getElementById('panelClose').addEventListener('click', closeFocus);
+  document.getElementById('pZoom').addEventListener('click', () => {
+    if (current >= 0) zoomOpen(PURSES[current]);
+  });
+  window.addEventListener('keydown', e => {
+    if (zoomIsOpen()){
+      if (e.key === 'Escape') zoomClose();
+      return;
+    }
+    switch (e.key){
+      case 'ArrowUp':    walkBy(-WALK_KEY); break;          // walk forward, down the aisle
+      case 'ArrowDown':  walkBy( WALK_KEY); break;          // walk back
+      case 'ArrowLeft':  panelOpen() ? focusOn(current - 1) : glanceBy( GLANCE_STEP); break;  // look left / prev
+      case 'ArrowRight': panelOpen() ? focusOn(current + 1) : glanceBy(-GLANCE_STEP); break;  // look right / next
+      case 'Escape':     closeFocus(); break;
+    }
+  });
+
+  /* ----- raycast tap-to-focus ----- */
+  const ray = new THREE.Raycaster();
+  const ptr = new THREE.Vector2();
+  let downX = 0, downY = 0, lastPX = 0, lastPY = 0, dragging = false, dragDist = 0;
+
+  canvas.addEventListener('pointerdown', e => {
+    downX = lastPX = e.clientX; downY = lastPY = e.clientY; dragging = true; dragDist = 0;
+  });
+  // Drag = walk (vertical) / glance (horizontal). Small movement stays a tap (handled on pointerup).
+  canvas.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const dx = e.clientX - lastPX, dy = e.clientY - lastPY;
+    lastPX = e.clientX; lastPY = e.clientY;
+    dragDist += Math.hypot(dx, dy);
+    if (dragDist < 8) return;                          // below tap threshold — ignore jitter
+    if (Math.abs(dy) >= Math.abs(dx)) walkBy(dy * 0.02);   // drag up = walk forward
+    else glanceBy(-dx * 0.004);                            // drag right = look right
+  });
+  window.addEventListener('pointerup', () => { dragging = false; });
+
+  // Scroll / two-finger swipe = walk down (and back up) the aisle — the primary control.
+  canvas.addEventListener('wheel', e => {
+    e.preventDefault();
+    walkBy(-e.deltaY * WALK_WHEEL);                     // scroll down = walk forward
+  }, { passive: false });
+
+  // Tap (no drag) = step up close to that vitrine.
+  canvas.addEventListener('pointerup', e => {
+    if (Math.hypot(e.clientX - downX, e.clientY - downY) > 8) return;  // it was a drag/swipe
+    ptr.x = (e.clientX / window.innerWidth) * 2 - 1;
+    ptr.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    ray.setFromCamera(ptr, camera);
+    const hits = ray.intersectObjects(pickMeshes, false);
+    if (hits.length) focusOn(hits[0].object.userData.index);
+  });
+
+  /* ----- "Look around": cursor-visible free turning. No pointer lock, no up/down tilt. ----- */
+  let lookAround = false;
+  const yawMax = () => lookAround ? 2.9 : GLANCE;      // ~166° each way when looking around
+  const flBtn = document.getElementById('freelookBtn');
+  flBtn.textContent = 'Look around';
+  flBtn.addEventListener('click', () => {
+    lookAround = !lookAround;
+    flBtn.textContent = lookAround ? 'Looking around — drag to turn' : 'Look around';
+    flBtn.classList.toggle('active', lookAround);
+    if (!lookAround) lookYaw = THREE.MathUtils.clamp(lookYaw, -GLANCE, GLANCE);  // ease back to a gentle glance
+    needsRender = true;
+  });
+
+  /* ----- render loop (paused when hidden / idle; gleam sweep wakes it briefly) ----- */
+  let needsRender = true;
+  let lastT = performance.now();
+  let paused = false;
+  let gleamWasActive = false;
+  const GLEAM_PERIOD = 9000, GLEAM_DUR = 2200;
+  document.addEventListener('visibilitychange', () => {
+    paused = document.hidden;
+    if (!paused){ lastT = performance.now(); needsRender = true; }
+  });
+
+  function animate(now){
+    requestAnimationFrame(animate);
+    if (paused) return;
+    const dt = Math.min(0.05, (now - lastT)/1000);
+    lastT = now;
+
+    if (tween){
+      const k = Math.min(1, (now - tween.t0) / tween.dur);
+      const e = easeInOut(k);
+      camera.position.lerpVectors(tween.fromP, tween.toP, e);
+      camera.quaternion.slerpQuaternions(tween.fromQ, tween.toQ, e);
+      if (k >= 1) tween = null;
+      needsRender = true;
+    }
+
+    // rail-walk: glide the camera toward the target spot on the aisle + look angle
+    if (strollActive && !tween){
+      const ap = 1 - Math.pow(0.0025, dt);   // frame-rate-independent smoothing
+      const al = 1 - Math.pow(0.0008, dt);
+      const px = camera.position.x + (0      - camera.position.x) * ap;
+      const py = camera.position.y + (1.7    - camera.position.y) * ap;
+      const pz = camera.position.z + (strollZ - camera.position.z) * ap;
+      const moving =
+        Math.abs(px - camera.position.x) > 1e-4 || Math.abs(py - camera.position.y) > 1e-4 ||
+        Math.abs(pz - camera.position.z) > 1e-4 || Math.abs(lookYaw - lookYawCur) > 1e-4;
+      camera.position.set(px, py, pz);
+      lookYawCur += (lookYaw - lookYawCur) * al;
+      camera.quaternion.setFromEuler(new THREE.Euler(0, lookYawCur, 0, 'YXZ'));
+      if (moving) needsRender = true;
+    }
+
+    // occasional sparkle gleam sweeping across the glass (tasteful, slow)
+    if (gleams.length){
+      const t = now % GLEAM_PERIOD;
+      if (t < GLEAM_DUR && !zoomIsOpen()){
+        const k = t / GLEAM_DUR;
+        const x = -0.45 + 0.9 * k;
+        const op = Math.sin(Math.PI * k) * 0.18;
+        gleamMat.opacity = op;
+        for (const g of gleams){ g.visible = true; g.position.x = x; }
+        gleamWasActive = true;
+        needsRender = true;
+      } else if (gleamWasActive){
+        for (const g of gleams) g.visible = false;
+        gleamWasActive = false;
+        needsRender = true;                      // one last frame to hide the strips
+      }
+    }
+
+    if (needsRender){
+      renderer.render(scene, camera);
+      needsRender = false;
+    }
+  }
+  requestAnimationFrame(animate);
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    needsRender = true;
+  });
+
+  window.addEventListener('pagehide', () => {
+    allTextures.forEach(t => t.dispose());
+    renderer.dispose();
+  });
+}
+</script>
+</body>
+</html>

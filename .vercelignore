@@ -1,0 +1,5 @@
+.playwright-mcp
+*.jpeg
+shot-*.png
+_originals
+_staging_purses

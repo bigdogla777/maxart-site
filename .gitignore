@@ -1,0 +1,11 @@
+# Vercel
+.vercel
+
+# Tooling / scratch
+.playwright-mcp
+shot-*.png
+
+# Source-only working dirs (not deployed; see .vercelignore)
+_originals
+_staging_purses
+*.jpeg

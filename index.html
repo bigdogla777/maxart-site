@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MaxArt by Maxine Orndorff Gregory | Fine Art Paintings & Handcrafted Purses</title>
+    <meta name="description" content="The finest fine art paintings and unique, handcrafted, elegant fashion accessories">
+    <link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt">
+    <meta name="keywords" content="handmade beaded purses, fine art stillifes, commissioned pet portraits">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <style>
+        :root {
+            --primary: #b66d48;
+            --bg-light: #f9f8f5;
+            --text-dark: #2a2a2a;
+            --text-gray: #555;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 { 
+            font-family: 'Playfair Display', serif; 
+            font-weight: 700;
+        }
+
+        /* ——— NAVIGATION ——— */
+        header {
+            background-color: white;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 1.5rem; 
+            color: var(--text-dark);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #444;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover, nav a.active { color: var(--primary); }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+ 
+        .price-badge {
+          background: red;
+          padding: 4px 12px;
+          border-radius: 4px;
+          font-size: 0.9rem;
+          color: white;
+          display: inline-block;
+        }
+
+
+        /* ——— HERO SECTION ——— */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem 3rem;
+            background-image: linear-gradient(to bottom, #fff, var(--bg-light));
+        }
+        
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 1rem; line-height: 1.1; }
+        .hero p { max-width: 600px; margin: 0 auto 2rem; color: var(--text-gray); font-size: 1.1rem; }
+
+        /* ——— GALLERY LAYOUTS ——— */
+        .gallery-controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+        
+        .view-toggle-btn {
+            background-color: white;
+            border: 2px solid #ddd;
+            color: #555;
+            padding: 0.6rem 1.4rem;
+            border-radius: 50px;
+            font-family: 'Lato', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .view-toggle-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* ——— GRID SYSTEMS ——— */
+        .gallery-grid { 
+            display: grid; 
+            gap: 2rem;
+            padding: 0 2rem max(4rem, 2vw); 
+        }
+        
+        /* Standard (Compact) View */
+        .gallery-compact {
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            /* Auto-fit to width of item — no masonry stacking here for simplicity */
+        }
+
+        /* Larger (Masonry-style approximation with column-count) */
+        .gallery-large {
+            column-count: 2; 
+            column-gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        @media (min-width: 960px) {
+            .gallery-large { column-count: 3; }
+        }
+
+        /* ——— GALLERY ITEM CARD ——— */
+        .gallery-item {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            break-inside: avoid; /* Prevents splitting in column-count */
+        }
+
+        .gallery-item:hover { 
+            transform: translateY(-6px); 
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+        }
+        
+        .gallery-item a {
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease, opacity 0.3s ease;
+        }
+        
+        .gallery-item:hover img { 
+            transform: scale(1.04);
+            opacity: 0.9; 
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0,0,0,0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .gallery-item:hover .overlay { opacity: 1; }
+
+        .zoom-icon {
+            color: white;
+            font-size: 2rem;
+            transform: scale(0.7);
+            transition: transform 0.4s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        
+        .gallery-item:hover .zoom-icon { transform: scale(1); }
+
+        .item-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .item-title { font-size: 1.3rem; margin-bottom: 0.3rem; }
+        .meta-info { color: #777; font-size: 0.9rem; }
+
+        /* ——— LIGHTBOX ——— */
+        .lightbox {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(25, 25, 35, 0.95);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active { 
+            display: flex; 
+            animation: fadeIn 0.4s ease-in-out; 
+        }
+
+        #close-lightbox {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.7);
+            font-size: 3rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        #close-lightbox:hover { color: white; }
+
+        .lightbox-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 95%;
+            text-align: center;
+        }
+
+        .lightbox-img {
+            max-height: 80vh;
+            max-width: 90vw;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            object-fit: contain;
+            margin-bottom: 1.5rem;
+        }
+
+        .lightbox-caption {
+            color: #ddd;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            line-height: 1.3;
+            margin-top: 0.75rem;
+        }
+        
+        @keyframes fadeIn { 
+            from { opacity: 0; } 
+            to { opacity: 1; } 
+        }
+
+        /* ——— FOOTER ——— */
+        footer {
+            background-color: #2a2a2a;
+            color: #ccc;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-top: 5rem;
+        }
+        
+        .footer-content { max-width: 900px; margin: 0 auto; }
+        footer p { font-size: 0.95rem; margin-bottom: 1.5rem; opacity: 0.8; }
+
+        @media (max-width: 768px) {
+            nav ul, .hero h1 { display: none; } /* Hide desktop nav in demo */
+            .mobile-menu-btn { display: block; }
+            .gallery-compact { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+        }
+  
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">MaxArt by Maxine Orndorff Gregory</a>
+            
+            <!-- Desktop Nav -->
+            <nav id="desktop-nav">
+                <ul>
+                    <li><a href="#work" class="active">Work</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+                <!-- Mobile Toggle -->
+            <button class="mobile-menu-btn" id="menu-toggle" aria-label="Toggle Navigation">
+                ☰
+            </button>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <nav id="mobile-nav" style="display:none; background:white;">
+            <ul style="flex-direction:column; padding:1rem 0;">
+                <li><a href="#work" class="active" onclick="closeMobileNav()">Work</a></li>
+                <li><a href="#about" onclick="closeMobileNav()">About</a></li>
+                <li><a href="#contact" onclick="closeMobileNav()">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Art That Tells a Story & Handcrafted Beauty</h1>
+        <p>A Curated Collection of Original Fine Art Paintings and One-of-a-Kind Hand-Beaded Purses — Where Traditional Arts Meet the Present.</p>
+        
+        <div class="gallery-controls">
+            <button id="view-toggle" class="view-toggle-btn active">Compact View (Grid)</button>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="work">
+        <div class="gallery-grid gallery-compact" id="gallery">
+            <!-- Gallery items will be injected here with JS for brevity, or written manually below -->
+            
+            <!-- 30 Items (Manual list for SEO & reliability) -->
+
+            <article class="gallery-item">
+                <a href="#" data-title="_NZ86667.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="_NZ86667.jpg" alt="Stars and Stripes Forever" loading="lazy"/>
+                    <span class="price-badge">$850</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Stars and Stripes Forever, Semiquincentennial Edition</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="imagejpeg_2.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="imagejpeg_2.jpg" alt="Romani Elegance" loading="lazy"/>
+                    <span class="price-badge">$700</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Romani Elegance</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="imagejpeg_1-1.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="imagejpeg_1-1.jpg" alt="Pretty in Pink" loading="lazy"/>
+                    <span class="price-badge">$600</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Pretty in Pink</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="imagejpeg_3.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="imagejpeg_3.jpg" alt="Love is in the Air" loading="lazy"/>
+                    <span class="price-badge">$600</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Love is in the Air</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+
+            <article class="gallery-item">
+                <a href="#" data-title="imagejpeg_3-1.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="imagejpeg_3-1.jpg" alt="Grand Dame" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Grand Dame</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="imagejpeg_4.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="imagejpeg_4.jpg" alt="Pumpkin Pie" loading="lazy"/>
+                    <span class="price-badge">$975</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Pumpkin Pie</h3>
+                    <p class="meta-info">Hand-Beaded Purse with Semi-Precious Stones</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="imagejpeg_1.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="imagejpeg_1.jpg" alt="Jade Elegance" loading="lazy"/>
+                    <span class="price-badge">$750</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Jade Elegance</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="imagejpeg_2-1.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="imagejpeg_2-1.jpg" alt="Tannenbaum" loading="lazy"/>
+                    <span class="price-badge">$650</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Tannenbaum</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+
+            <article class="gallery-item">
+                <a href="#" data-title="imagejpeg_0-1.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="imagejpeg_0-1.jpg" alt="Spring Grass" loading="lazy"/>
+                    <span class="price-badge">$850</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Spring Grass</h3>
+                    <p class="meta-info">Hand-Beaded Purse with Semi-Precious Stones</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="imagejpeg_0.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="imagejpeg_0.jpg" alt="Ember Sparks" loading="lazy"/>
+                    <span class="price-badge">$750</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Ember Sparks</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="_NZ86684.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="_NZ86684.jpg" alt="Surrender" loading="lazy"/>
+                    <span class="price-badge">$775</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Surrender</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="_NZ86689.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="_NZ86689.jpg" alt="A Walk in Fields of Gold" loading="lazy"/>
+                    <span class="price-badge">$850</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">When We Walked in Fields of Gold</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+
+            <article class="gallery-item">
+                <a href="#" data-title="_NZ86679.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="_NZ86679.jpg" alt="Trepidation" loading="lazy"/>
+                    <span class="price-badge">$700</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Trepidation</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="_NZ86678.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="_NZ86678.jpg" alt="Flapper" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Flapper</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="_NZ86676.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="_NZ86676.jpg" alt="Winter Wheat" loading="lazy"/>
+                    <span class="price-badge">$800</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Winter Wheat</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="_NZ86673.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="_NZ86673.jpg" alt="Coral Sea" loading="lazy"/>
+                    <span class="price-badge">$650</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Coral Sea</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+
+            <article class="gallery-item">
+                <a href="#" data-title="_NZ86671.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="_NZ86671.jpg" alt="Straight Lace" loading="lazy"/>
+                    <span class="price-badge">$850</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Straight Lace</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="_NZ86670.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="_NZ86670.jpg" alt="Bangles and Beads" loading="lazy"/>
+                    <span class="price-badge">$850</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Bangles and Beads</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="_NZ86665.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="_NZ86665.jpg" alt="Are the Stars Out Tonight?" loading="lazy"/>
+                    <span class="price-badge">$650</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Are the Stars Out Tonight?</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="_NZ86664.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="_NZ86664.jpg" alt="Peacock's On" loading="lazy"/>
+                    <span class="price-badge">$750</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Peacock's On</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+
+            <article class="gallery-item">
+                <a href="#" data-title="_NZ86660.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="_NZ86660.jpg" alt="It's That Rare" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Fantasy</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="_NZ86657.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="_NZ86657.jpg" alt="Beyond This Point There Be Dragons" loading="lazy"/>
+                    <span class="price-badge">$850</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Beyond This Point There Be Dragons</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="_NZ86655.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="_NZ86655.jpg" alt="Dressed to Kill" loading="lazy"/>
+                    <span class="price-badge">$800</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Dressed to Kill</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+
+            <article class="gallery-item">
+                <a href="#" data-title="imagejpeg_001.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="imagejpeg_001.jpg" alt="Great Pumpkin" loading="lazy"/>
+                    <span class="price-badge">$700</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Great Pumpkin</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="imagejpeg_101.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="imagejpeg_101.jpg" alt="Wine Dark Sea" loading="lazy"/>
+                    <span class="price-badge">$800</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Wine Dark Sea</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="imagejpeg_201.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="imagejpeg_201.jpg" alt="Red Sky in the Morning" loading="lazy"/>
+                    <span class="price-badge">$750</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Red Sky in the Morning</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="imagejpeg_301.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="imagejpeg_301.jpg" alt="Winter Grass" loading="lazy"/>
+                    <span class="price-badge">$650</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Winter Grass</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+
+            <article class="gallery-item">
+                <a href="#" data-title="purse-rose-plume.jpg" data-desc="Hand-Beaded Purse with Semi-Precious Stones" class="lightbox-trigger">
+                    <img src="purse-rose-plume.jpg" alt="Rose Plume" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Rose Plume</h3>
+                    <p class="meta-info">Hand-Beaded Purse with Semi-Precious Stones</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="purse-imperial-gold.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="purse-imperial-gold.jpg" alt="Imperial Gold" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Imperial Gold</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="purse-midnight-bronze.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="purse-midnight-bronze.jpg" alt="Midnight Bronze" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Midnight Bronze</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="purse-moonflower.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="purse-moonflower.jpg" alt="Moonflower" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Moonflower</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="purse-sapphire-and-gold.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="purse-sapphire-and-gold.jpg" alt="Sapphire and Gold" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Sapphire and Gold</h3>
+                    <p class="meta-info">Hand-Beaded Purse</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="purse-butterfly-meadow.jpg" data-desc="Hand-Beaded Purse with Semi-Precious Stones" class="lightbox-trigger">
+                    <img src="purse-butterfly-meadow.jpg" alt="Butterfly Meadow" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Butterfly Meadow</h3>
+                    <p class="meta-info">Hand-Beaded Purse with Semi-Precious Stones</p>
+                </div>
+            </article>
+
+
+
+
+
+            <article class="gallery-item">
+                <a href="#" data-title="BountifulHarvest.jpg" data-desc="Oil on canvas" class="lightbox-trigger">
+                    <img src="BountifulHarvest.jpg" alt="Bountiful Harvest" loading="lazy" />
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Bountiful Harvest</h3>
+                    <p class="meta-info">Oil on canvas, 36"x30"</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="Feathers and Pottery" class="lightbox-trigger">
+                    <img src="stilllife-01.jpg" alt="Feathers and Pottery" loading="lazy" />
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Feathers and Pottery</h3>
+                    <p class="meta-info">Oil on canvas, 24"x20"</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="Summer's Eve" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="summerseve-(1).jpg" alt="Summer's Eve" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Summer's Eve</h3>
+                    <p class="meta-info">Oil on canvas, 24"x36"</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="leopard.jpg" data-desc="Oil on Canvas, 60x48 in., 2002" class="lightbox-trigger">
+                    <img src="leopard.jpg" alt=", Waiting for Sunset" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Waiting for Sunset</h3>
+                    <p class="meta-info">Oil on Board, 60"x40"</p>
+                </div>
+            </article>
+              <article class="gallery-item">
+                <a href="#" data-title="Thunder" data-desc="Oil on Board, 30"x24" class="lightbox-trigger">
+                    <img src="thunder-800.jpg" alt="Thunder" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Thunder</h3>
+                    <p class="meta-info">Oil on Board, 30"x24"</p>
+                </div>
+            </article>
+
+            <article class="gallery-item">
+                <a href="#" data-title="Twilight" data-desc="Oil on canvas" class="lightbox-trigger">
+                    <img src="twilight.jpg" alt="Bountiful Harvest, oil on canvas" loading="lazy" />
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Twilight</h3>
+                    <p class="meta-info">Oil on canvas, 30"x36"</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="Two's Company" data-desc="Oil on canvas" class="lightbox-trigger">
+                    <img src="TwosCompany.jpg" alt="Two's Company" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Two's Company</h3>
+                    <p class="meta-info">Oil on canvas, 24"x30"</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="Yellow Roses" data-desc="Oil on Canvas, 60x48 in., 2002" class="lightbox-trigger">
+                    <img src="yellow-roses.jpg" alt=", Waiting for Sunset" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Yellow Roses</h3>
+                    <p class="meta-info">Oil on Board, 30"x40", 2002</p>
+                </div>
+            </article>
+              <article class="gallery-item">
+                <a href="#" data-title="orchids.jpg" data-desc="Oil on Board" class="lightbox-trigger">
+                    <img src="orchids.jpg" alt="Orchids" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Orchids</h3>
+                    <p class="meta-info">Oil on Board, 24"x30"</p>
+                </div>
+            </article>
+
+            <article class="gallery-item">
+                <a href="#" data-title="Twilight" data-desc="Oil on canvas" class="lightbox-trigger">
+                    <img src="twilight.jpg" alt="Twilight" loading="lazy" />
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Twilight</h3>
+                    <p class="meta-info">Oil on canvas, 20"x24"</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="PetPortrait.jpg" data-desc="Oil on canvas" class="lightbox-trigger">
+                    <img src="PetPortrait.jpg" alt="Pet Portrait" loading="lazy"/>
+                    <span class="price-badge">Private Commision</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Pet Portrait</h3>
+                    <p class="meta-info">Oil on canvas, 20"x24"</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="roses-glasses-wine.jpg" data-desc="Oil on Canvas, 60x48 in., 2002" class="lightbox-trigger">
+                    <img src="roses-glasses-wine.jpg" alt=", Waiting for Sunset" loading="lazy"/>
+                    <span class="price-badge">$5000</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Roses, Glasses, and Wine</h3>
+                    <p class="meta-info">Oil on Board, 18"x22", 2002</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="glasses-fruit-wine.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="glasses-fruit-wine.jpg" alt="Two's Company" loading="lazy"/>
+                    <span class="price-badge">$5000</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Glass, Fruit, and Wine</h3>
+                    <p class="meta-info">Oil on canvas, 18"x22""</p>
+                </div>
+            </article>
+
+
+              <article class="gallery-item">
+                <a href="#" data-title="shades-of-purple.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="shades-of-purple.jpg" alt=", Pretty in Pink" loading="lazy"/>
+                    <span class="price-badge">$5000</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Shades of Purple</h3>
+                    <p class="meta-info">Oil on Board, 22"x24"</p>
+                </div>
+            </article>
+
+            <article class="gallery-item">
+                <a href="#" data-title="landscape-01.jpg" data-desc="Oil on canvas" class="lightbox-trigger">
+                    <img src="landscape-01.jpg" alt="Bountiful Harvest, oil on canvas" loading="lazy" />
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Landscape 01</h3>
+                    <p class="meta-info">Oil on canvas, 24"x36"</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="landscape-08.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="landscape-08.jpg" alt="Two's Company" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Landscape 08</h3>
+                    <p class="meta-info">Oil on canvas, 24"x36"</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="IMG_2959.jpg" data-desc="Acrylic on Canvas, 2025" class="lightbox-trigger">
+                    <img src="IMG_2959.jpg" alt="Pet Portrait" loading="lazy"/>
+                    <span class="price-badge">Private Commision</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Pet Portrait</h3>
+                    <p class="meta-info">Acrylic on Canvas, 20"x24", 2025</p>
+                </div>
+            </article>
+              <article class="gallery-item">
+                <a href="#" data-title="image009.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="image009.jpg" alt=", Pretty in Pink" loading="lazy"/>
+                    <span class="price-badge">Private Commision</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Pet Portrait</h3>
+                    <p class="meta-info">Oil on Board, 60"x40"</p>
+                </div>
+            </article>
+
+            <article class="gallery-item">
+                <a href="#" data-title="image008.jpg" data-desc="Oil on canvas" class="lightbox-trigger">
+                    <img src="image008.jpg" alt="Bountiful Harvest, oil on canvas" loading="lazy" />
+                    <span class="price-badge">Private Commision</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Pet Portrait</h3>
+                    <p class="meta-info">Oil on canvas, 24"x36"</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="image007.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="image007.jpg" alt="Two's Company" loading="lazy"/>
+                    <span class="price-badge">Private Commision</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Pet Portrait</h3>
+                    <p class="meta-info">Oil on canvas, 24"x36"</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="image004.jpg" data-desc="Oil on Canvas, 60x48 in., 2002" class="lightbox-trigger">
+                    <img src="image004.jpg" alt=", Waiting for Sunset" loading="lazy"/>
+                    <span class="price-badge">Private Commision</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Pet Portrait</h3>
+                    <p class="meta-info">Oil on Board, 60"x40", 2002</p>
+                </div>
+            </article>
+              <article class="gallery-item">
+                <a href="#" data-title="image006.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="image006.jpg" alt=", Pretty in Pink" loading="lazy"/>
+                    <span class="price-badge">Private Commision</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Pet Portrait</h3>
+                    <p class="meta-info">Oil on Board, 60"x40"</p>
+                </div>
+            </article>
+
+            <article class="gallery-item">
+                <a href="#" data-title="image005.jpg" data-desc="Oil on canvas" class="lightbox-trigger">
+                    <img src="image005.jpg" alt="Bountiful Harvest, oil on canvas" loading="lazy" />
+                    <span class="price-badge">Private Commision</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Pet Portrait</h3>
+                    <p class="meta-info">Oil on canvas, 24"x36"</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="image003.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="image003.jpg" alt="Two's Company" loading="lazy"/>
+                    <span class="price-badge">Private Commision</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Pet Portrait. Sorta'</h3>
+                    <p class="meta-info">Oil on canvas, 24"x36"</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="image002-(2).jpg" data-desc="Oil on Canvas, 60x48 in., 2002" class="lightbox-trigger">
+                    <img src="image002-(2).jpg" alt=", Waiting for Sunset" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Long Day's Night</h3>
+                    <p class="meta-info">Oil on Board, 60"x40", 2002</p>
+                </div>
+            </article>
+              <article class="gallery-item">
+                <a href="#" data-title="image002-(1).jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="image002-(1).jpg" alt=", Pretty in Pink" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Great Day at the Track</h3>
+                    <p class="meta-info">Oil on Board, 60"x40"</p>
+                </div>
+            </article>
+
+            <article class="gallery-item">
+                <a href="#" data-title="image001.jpg" data-desc="Oil on canvas" class="lightbox-trigger">
+                    <img src="image001.jpg" alt="Bountiful Harvest, oil on canvas" loading="lazy" />
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Night of the Storyteller</h3>
+                    <p class="meta-info">Oil on canvas, 24"x36"</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="image001-(4).jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="image001-(4).jpg" alt="Two's Company" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Anticipation</h3>
+                    <p class="meta-info">Oil on canvas, 24"x36"</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="image001-(3).jpg" data-desc="Oil on Canvas, 60x48 in., 2002" class="lightbox-trigger">
+                    <img src="image001-(3).jpg" alt="19th Hole" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">19th Hole</h3>
+                    <p class="meta-info">Oil on Board, 60"x40", 2002</p>
+                </div>
+            </article>
+              <article class="gallery-item">
+                <a href="#" data-title="image001-(2).jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="image001-(2).jpg" alt=", Pretty in Pink" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Company Coming...</h3>
+                    <p class="meta-info">Oil on Board, 60"x40"</p>
+                </div>
+            </article>
+
+            <article class="gallery-item">
+                <a href="#" data-title="image001-(1).jpg" data-desc="Oil on canvas" class="lightbox-trigger">
+                    <img src="image001-(1).jpg" alt="Bountiful Harvest, oil on canvas" loading="lazy" />
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">More Stories...</h3>
+                    <p class="meta-info">Oil on canvas, 24"x36"</p>
+                </div>
+            </article>
+            
+            <article class="gallery-item">
+                <a href="#" data-title="fish.jpg" data-desc="Oil on Canvas, 60x48 in., 2002" class="lightbox-trigger">
+                    <img src="fish.jpg" alt=", Waiting for Sunset" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Tight Line</h3>
+                    <p class="meta-info">Oil on Board, 60"x40", 2002</p>
+                </div>
+            </article>
+              <article class="gallery-item">
+                <a href="#" data-title="fall-day-at-piney-lake.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="fall-day-at-piney-lake.jpg" alt=", Pretty in Pink" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Fall Day at Piney Lake</h3>
+                    <p class="meta-info">Oil on Board, 60"x40"</p>
+                </div>
+            </article>
+
+            <article class="gallery-item">
+                <a href="#" data-title="elk.jpg" data-desc="Oil on canvas" class="lightbox-trigger">
+                    <img src="elk.jpg" alt="Bountiful Harvest, oil on canvas" loading="lazy" />
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Bugle Boy of Company B</h3>
+                    <p class="meta-info">Oil on canvas, 24"x36"</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="chardonnay.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="chardonnay.jpg" alt="Two's Company" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Chardonnay</h3>
+                    <p class="meta-info">Oil on canvas, 24"x36"</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="california-cabernet.jpg" data-desc="Oil on Canvas, 60x48 in., 2002" class="lightbox-trigger">
+                    <img src="california-cabernet.jpg" alt=", Waiting for Sunset" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">California Cab</h3>
+                    <p class="meta-info">Oil on Board, 60"x40", 2002</p>
+                </div>
+            </article>
+              <article class="gallery-item">
+                <a href="#" data-title="beanoscabin.jpg" data-desc="Hand-Beaded Purse" class="lightbox-trigger">
+                    <img src="beanoscabin.jpg" alt=", Pretty in Pink" loading="lazy"/>
+                    <span class="price-badge">SOLD</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Beano's Cabin</h3>
+                    <p class="meta-info">Oil on Board, 60"x40"</p>
+                </div>
+            </article>
+            <article class="gallery-item">
+                <a href="#" data-title="Pet-Portrait-001" data-desc="Bespoke Pet Portrait" class="lightbox-trigger">
+                    <img src="Pet-Portrait-001.jpg" alt=", Pet Portrait" loading="lazy"/>
+                    <span class="price-badge">Private Commision</span>
+                    <!--<div class="overlay"><span class="zoom-icon">🔍</span></div>-->
+                </a>
+                <div class="item-content">
+                    <h3 class="item-title">Pet Portrait</h3>
+                    <p class="meta-info">Oil on Board, 18"x22"</p>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+  <!-- ABOUT SECTION -->
+  <section id="about" style="padding: 80px 0;">
+    <div class="container about-grid">
+      <div class="about-text">
+      <div style="margin-left: 40px; margin-right: 40px;">
+        <h1>Meet Maxine!</h1>
+
+<figure style="max-width:700px; margin:2rem auto; text-align:center;">
+  <img src=maxgigs1.jpg alt="Sitting with Giggles" style="max-width:100%; display:block; margin:0 auto;">
+  <figcaption>Sitting with my Dog, Giggles</figcaption>
+</figure>
+        <p><br><em>
+With over six decades in fine arts and textile design, I create pieces rooted in tradition but shaped by contemporary life. My paintings explore color relationships and texture, while my purses are functional art crafted for everyday elegance. And, you need to wear your daughter's heirloom  - Maxine
+        </em></p><br>
+        <h2>About the Artist</h2>
+        <p><br>
+Maxine's desire for creative expression seemed to exist before she picked up her first drawing instrument. In her early childhood her interest in art turned to painting. She trained at the Washington School of Art in Washington, D.C., Loveland Art Academy in Colorado, Scottsdale Art Academy and with David Leffel, Charles Cross, Terry Issac, Rod Frederick, Margaret Kessler, Robert Bateman, and Quang Ho.
+</p>
+<br>
+<p>
+Her earliest success came in Florida in the late 1970's with paintings of landscapes, seascapes and birds. There she was commissioned to paint four Florida landscapes by the City of Vero Beach. Many professionals throughout Florida purchased her early works to beautify their offices and homes including the Mayor and the City Attorney of Kissimme, FL. Many residents of Johns Island as well as the Senior Vice President of Yamaha Motor Corporation own her paintings. Her paintings are enjoyed by art lovers from the East to the West Coasts.
+</p>
+<br>
+<p>
+In the early 1990s she moved to Colorado and her art evolved to the still life paintings, landscapes, and animals that are her signature today. Still life paintings, her favorite, are in the style of the Old Masters with modern and timeless objects. Her interest in wine has transferred to her art in her newest series "Wine & Companions". Her medium is oil on panel.
+</p>
+<br>
+<p>
+She has won numerous awards throughout her long career. These have run the gamut from ribbons in regional art shows to prizes in major competitions. Recognition includes a third place finish in the Duck's Unlimited Stamp Contest for a still life of an antique duck decoy and shotgun, the Winsor Newton Award at the Heritage Fine Art Show, People's Choice Award at The Thompson Art Show, First Place in The Scottsdale Artist School Show, and acceptance into the National Oil & Acrylic Painter's Society Show. Since her participation in the La Quinta Art Festival, CA; Boulder Art show, Evergreen Art Show, Breckenridge Art Festival, Beaver Creek, CO; Bayou City Art Festival, Cottonwood Art Festival, TX; Impressions Gallery and the Turner Art Gallery in Denver, demand for her art has increased among collectors.
+</p>
+<br>
+<p>
+Maxine's paintings are noted for not merely recording a scene but for setting a mood. Her great sense of color, combined with her sense of design create the harmony of shapes and light that enchant viewers.
+</p>
+<p>
+<br>
+<figure class="video-figure">
+  <video controls>
+    <source src=Signature.mp4 type="video/mp4">
+  </video>
+  <figcaption>The final touch...</figcaption>
+</figure>
+</p>
+      </div>
+      </div>
+<figure style="max-width:700px; margin:2rem auto; text-align:center;">
+  <img src=maxine.jpg alt="Painting On Location: Maroon Bells, CO" style="max-width:100%; display:block; margin:0 auto;">
+  <figcaption>Painting On Location: Maroon Bells, CO</figcaption>
+</figure>
+      </div>
+
+
+<h1 align=center style='text-align:center'><span style='mso-fareast-font-family:
+"Times New Roman"'>Remarqued, Artist Proof Giclee Fine Art Reproductions Available<o:p></o:p></span></h1>
+
+<p class=MsoNormal align=center style='margin-bottom:12.0pt;text-align:center'><br>
+Giclee (pronounced &quot;zhee-clay&quot;) fine art reproductions have the look
+and feel of an original piece of art. Giclee reproductions will look good for a
+hundred years when properly displayed. Prints on canvas can be up to 52 inches
+wide and unlimited in length. Pricing for all of Maxine's Giclees are according
+to size and are unframed and unmounted. Write for specific quotes. </p>
+
+
+
+  </section>
+
+    <!-- Lightbox Modal -->
+ <!-- Lightbox Modal -->
+<div id="lightbox" aria-hidden="true">
+    <div class="lightbox-content">
+        <span class="close-btn" role="button">&times;</span>
+        <h2 id="lb-title" class="lb-title"></h2>
+        <p id="lb-desc" class="lb-desc"></p>
+    </div>
+</div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <h3>Curious about a piece? Let's connect.</h3>
+            <p style="text-align: center; margin-top: 40px; color: var(--text-muted);">
+        Email me directly at <a href="mailto:maxart@pcisys.net" style="color: #B89C6C">maxart@pcisys.net</a> <!-- spaceholder: or follow on Instagram <a href="#" style="color: #B89C6C">@maxart.studio</a> -->
+      </p>
+
+            <p>&copy; 2026 MaxArt by Maxine Orndorff Gregory. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 1. DOM Elements
+        const gallery = document.getElementById('gallery');
+        const lightbox = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lb-img');
+        const lbTitle = document.getElementById('lb-title');
+        const lbDesc = document.getElementById('lb-desc');
+        const closeBtn = document.querySelector('.close-btn');
+
+        // 2. Add dynamic gallery items (simulating content from a CMS/backend)
+        function addDynamicItems() {
+            for (let i = 4; i <= 6; i++) {
+                const item = document.createElement('article');
+                item.className = 'gallery-item';
+                item.innerHTML = `
+                    <a href="#" data-title="Piece #${i}" data-desc="Mixed media, ${18 + i}x24 in., 202${i % 10}" 
+                       class="lightbox-trigger">
+                        <img src="https://picsum.photos/id/${300+i}/600/400?grayscale" alt="Artwork #${i}">
+                        <div class="overlay"><span class="zoom-icon">🔍</span></div>
+                    </a>
+                    <div class="item-content">
+                        <h2 class="item-title">Piece #${i}</h2>
+                        <p class="meta-info">Mixed media • ${18 + i}×24 in. • 202${i % 10}</p>
+                    </div>
+                `;
+                // Prepend to show newest first (optional)
+                gallery.insertBefore(item, gallery.querySelector('.controls').nextSibling);
+            }
+        }
+
+        // 3. Lightbox logic
+        function openLightbox(e) {
+            e.preventDefault(); // Prevent default anchor behavior
+
+            // Get data from clicked <a> tag
+            const trigger = e.currentTarget;
+            const imgSrc = trigger.querySelector('img')?.src || '';
+            
+            lbImg.src = imgSrc;
+            lbTitle.textContent = trigger.dataset.title;
+            lbDesc.textContent = trigger.dataset.desc;
+
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = ''; // Restore scroll
+        }
+
+        // 4. Event Listeners
+
+        // Attach event to static and future items (delegation)
+        gallery.addEventListener('click', function(e) {
+            if (e.target.closest('.lightbox-trigger')) {
+                e.stopPropagation(); // Prevent double-firing on overlay click
+                openLightbox(e);
+            }
+        });
+
+        closeBtn.addEventListener('click', closeLightbox);
+        
+        // Close lightbox when clicking outside the modal content
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // ESC key to close
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && lightbox.style.display === 'flex') {
+                closeLightbox();
+            }
+        });
+
+        // 5. View toggle logic
+        const viewBtn = document.getElementById('view-toggle');
+        let isCompact = false;
+        
+        viewBtn.addEventListener('click', () => {
+            isCompact = !isCompact;
+            if (isCompact) {
+                gallery.classList.add('gallery-compact');
+                viewBtn.textContent = 'Standard View (Grid)';
+            } else {
+                gallery.classList.remove('gallery-compact');
+                viewBtn.textContent = 'Compact View (Grid)';
+            }
+        });
+
+        // 6. Initialize
+        addDynamicItems();
+    </script>
+
+</body>
+</html>

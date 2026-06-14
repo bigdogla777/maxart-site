@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MaxArt — Maxine Orndorff Gregory | Fine Art Paintings &amp; Hand-Beaded Purses</title>
+    <link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt">
+<meta name="description" content="The online catalogue of Maxine Orndorff Gregory: original fine art paintings and one-of-a-kind hand-beaded purses.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+/* ————————————————————————————————————————
+   QUIET GALLERY — editorial minimalism
+   The artwork is the hero; chrome disappears.
+———————————————————————————————————————— */
+:root {
+  --paper:      #fdfdfb;
+  --ink:        #2a2a2a;
+  --ink-soft:   #6b6b6b;
+  --hairline:   #e4e1da;
+  --gold:       #B89C6C;
+  --terracotta: #b66d48;
+  --measure:    62ch;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; animation: none !important; }
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+.serif { font-family: 'Playfair Display', serif; }
+
+/* tiny sans label — the catalogue voice */
+.label {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 1.25rem; }
+@media (min-width: 700px)  { .wrap { padding: 0 3rem; } }
+@media (min-width: 1100px) { .wrap { padding: 0 4rem; } }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+a { color: inherit; }
+
+/* ——— NAV ——— */
+.site-head {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(253, 253, 251, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.site-head .wrap {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding-top: 1.1rem; padding-bottom: 1.1rem;
+}
+
+.wordmark {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem; letter-spacing: 0.04em;
+  text-decoration: none; white-space: nowrap;
+}
+.wordmark em { font-style: italic; color: var(--ink-soft); }
+
+.site-nav ul { list-style: none; display: flex; gap: 2.25rem; }
+.site-nav a {
+  font-size: 0.6875rem; letter-spacing: 0.22em; text-transform: uppercase;
+  text-decoration: none; color: var(--ink-soft);
+  padding-bottom: 0.35rem; border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.site-nav a:hover, .site-nav a:focus-visible {
+  color: var(--ink); border-bottom-color: var(--gold);
+}
+
+@media (max-width: 560px) {
+  .site-head .wrap { flex-direction: column; gap: 0.6rem; align-items: flex-start; }
+  .site-nav ul { gap: 1.5rem; }
+}
+
+/* ——— HERO — quiet, text only ——— */
+.hero { padding: clamp(4rem, 12vw, 9rem) 0 clamp(3rem, 8vw, 6rem); }
+
+.hero .label { display: block; margin-bottom: 1.75rem; }
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 5.5vw, 3.75rem);
+  line-height: 1.18;
+  max-width: 18em;
+  letter-spacing: -0.01em;
+}
+.hero h1 em { font-style: italic; }
+
+.hero p {
+  margin-top: 1.75rem;
+  max-width: var(--measure);
+  font-size: 1rem;
+  color: var(--ink-soft);
+}
+
+.hero-rule {
+  border: 0; border-top: 1px solid var(--hairline);
+  margin: clamp(3rem, 8vw, 6rem) 0 0;
+}
+
+/* ——— SECTION HEADINGS ——— */
+.section-head {
+  display: flex; align-items: baseline; gap: 1.25rem;
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0 2rem;
+}
+.section-head .label { flex-shrink: 0; }
+.section-head::after {
+  content: ""; flex: 1; border-top: 1px solid var(--hairline);
+  transform: translateY(-0.2em);
+}
+.section-head .count { color: var(--gold); margin-left: 0.75em; letter-spacing: 0.12em; }
+
+/* ——— GALLERY — masonry via columns ——— */
+.catalogue { column-count: 1; column-gap: 2.5rem; }
+@media (min-width: 600px)  { .catalogue { column-count: 2; } }
+@media (min-width: 1024px) { .catalogue { column-count: 3; } }
+
+.work {
+  break-inside: avoid;
+  margin: 0 0 3.25rem;
+}
+
+.work-frame {
+  display: block; width: 100%;
+  border: 0; padding: 0; background: none; cursor: zoom-in;
+  text-align: inherit;
+}
+.work-frame img {
+  width: 100%;
+  transition: opacity 0.35s ease;
+}
+.work-frame:hover img, .work-frame:focus-visible img { opacity: 0.88; }
+.work-frame:focus-visible { outline: 1px solid var(--gold); outline-offset: 6px; }
+
+.work figcaption {
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--hairline);
+  margin-top: 0.9rem;
+}
+
+.work .no {
+  font-size: 0.625rem; letter-spacing: 0.22em;
+  color: var(--gold);
+  display: block; margin-bottom: 0.3rem;
+}
+
+.work h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500; font-size: 1.2rem; line-height: 1.3;
+  letter-spacing: 0.005em;
+}
+
+.work .medium {
+  margin-top: 0.25rem;
+  font-size: 0.8125rem; color: var(--ink-soft);
+}
+
+.work .status {
+  display: inline-block; margin-top: 0.45rem;
+  font-size: 0.625rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.work .status.sold        { color: var(--terracotta); }
+.work .status.commission  { color: var(--gold); }
+
+/* ——— ABOUT ——— */
+.about { padding: clamp(3rem, 8vw, 6rem) 0; }
+
+.about-grid {
+  display: grid; gap: 3rem;
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .about-grid { grid-template-columns: 5fr 7fr; gap: 5rem; }
+}
+
+.about figure img { width: 100%; }
+.about figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.75rem; letter-spacing: 0.08em; color: var(--ink-soft);
+}
+
+.about h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400; font-size: clamp(1.6rem, 3vw, 2.25rem);
+  margin-bottom: 1.5rem;
+}
+
+.about .pull {
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-weight: 400;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  line-height: 1.55;
+  border-left: 1px solid var(--gold);
+  padding-left: 1.5rem;
+  margin: 0 0 2.5rem;
+  max-width: var(--measure);
+}
+.about .pull cite { font-style: normal; display: block; margin-top: 0.75rem; font-size: 0.8em; color: var(--ink-soft); }
+
+.about .bio p {
+  max-width: var(--measure);
+  margin-bottom: 1.25rem;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.giclee {
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+  padding-top: 2rem;
+  border-top: 1px solid var(--hairline);
+  max-width: var(--measure);
+}
+.giclee h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500; font-size: 1.15rem; margin-bottom: 0.75rem;
+}
+.giclee p { font-size: 0.9rem; color: var(--ink-soft); }
+
+/* ——— FOOTER ——— */
+.site-foot {
+  border-top: 1px solid var(--hairline);
+  padding: clamp(3rem, 8vw, 5rem) 0 2.5rem;
+}
+
+.site-foot h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400; font-size: clamp(1.5rem, 3vw, 2rem);
+  margin-bottom: 1rem;
+}
+
+.site-foot .contact-line { font-size: 0.95rem; color: var(--ink-soft); }
+.site-foot .contact-line a {
+  color: var(--ink); text-decoration: none;
+  border-bottom: 1px solid var(--gold);
+  transition: color 0.2s ease;
+}
+.site-foot .contact-line a:hover { color: var(--terracotta); }
+
+.site-foot .fineprint {
+  margin-top: 3rem;
+  font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #9a9a9a;
+}
+
+/* ——— LIGHTBOX — white-room ——— */
+.lightbox {
+  position: fixed; inset: 0; z-index: 200;
+  display: none;
+  background: rgba(253, 253, 251, 0.97);
+  flex-direction: column; align-items: center; justify-content: center;
+  padding: 4.5rem 1.25rem 2rem;
+}
+.lightbox.open { display: flex; animation: lbFade 0.25s ease; }
+@keyframes lbFade { from { opacity: 0; } to { opacity: 1; } }
+
+.lightbox img {
+  max-width: min(92vw, 1100px);
+  max-height: 72vh;
+  width: auto; height: auto;
+  box-shadow: 0 30px 70px rgba(42, 42, 42, 0.18);
+}
+
+.lb-caption { text-align: center; margin-top: 1.75rem; }
+.lb-caption h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500; font-size: 1.35rem;
+}
+.lb-caption p { margin-top: 0.3rem; font-size: 0.8125rem; color: var(--ink-soft); }
+
+.lb-btn {
+  position: absolute;
+  background: none; border: 0; cursor: pointer;
+  font-family: 'Lato', sans-serif;
+  color: var(--ink-soft);
+  transition: color 0.2s ease;
+  padding: 0.75rem;
+}
+.lb-btn:hover, .lb-btn:focus-visible { color: var(--ink); }
+.lb-close { top: 1.1rem; right: 1.25rem; font-size: 1.75rem; line-height: 1; }
+.lb-prev, .lb-next {
+  top: 50%; transform: translateY(-50%);
+  font-size: 1.6rem;
+}
+.lb-prev { left: 0.75rem; }
+.lb-next { right: 0.75rem; }
+@media (max-width: 560px) {
+  .lb-prev { left: 0.1rem; } .lb-next { right: 0.1rem; }
+  .lightbox img { max-height: 62vh; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ——— NAV ——— -->
+<header class="site-head">
+  <div class="wrap">
+    <a class="wordmark" href="#top">MaxArt <em>· Maxine Orndorff Gregory</em></a>
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ——— HERO ——— -->
+  <section class="hero">
+    <div class="wrap">
+      <span class="label">Fine Art Paintings &amp; Hand-Beaded Purses</span>
+      <h1>Pieces rooted in tradition,<br>shaped by <em>contemporary life</em>.</h1>
+      <p>An online catalogue of original oil paintings and one-of-a-kind hand-beaded
+         purses by Maxine Orndorff Gregory — sixty years of fine arts and textile design.</p>
+      <hr class="hero-rule">
+    </div>
+  </section>
+
+  <!-- ——— WORK ——— -->
+  <section id="work" aria-label="Catalogue">
+    <div class="wrap">
+
+      <h2 class="visually-hidden">The Work</h2>
+
+      <!-- Paintings -->
+      <div class="section-head">
+        <span class="label">Paintings<span class="count">I</span></span>
+      </div>
+
+      <div class="catalogue">
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="BountifulHarvest.jpg" alt="Bountiful Harvest" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 01</span>
+            <h3>Bountiful Harvest</h3>
+            <p class="medium">Oil on canvas, 36&Prime; &times; 30&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="stilllife-01.jpg" alt="Feathers and Pottery" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 02</span>
+            <h3>Feathers and Pottery</h3>
+            <p class="medium">Oil on canvas, 24&Prime; &times; 20&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="summerseve-(1).jpg" alt="Summer's Eve" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 03</span>
+            <h3>Summer&rsquo;s Eve</h3>
+            <p class="medium">Oil on canvas, 24&Prime; &times; 36&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="leopard.jpg" alt="Waiting for Sunset" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 04</span>
+            <h3>Waiting for Sunset</h3>
+            <p class="medium">Oil on board, 60&Prime; &times; 40&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="thunder-800.jpg" alt="Thunder" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 05</span>
+            <h3>Thunder</h3>
+            <p class="medium">Oil on board, 30&Prime; &times; 24&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="twilight.jpg" alt="Twilight" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 06</span>
+            <h3>Twilight</h3>
+            <p class="medium">Oil on canvas, 30&Prime; &times; 36&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="TwosCompany.jpg" alt="Two's Company" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 07</span>
+            <h3>Two&rsquo;s Company</h3>
+            <p class="medium">Oil on canvas, 24&Prime; &times; 30&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="yellow-roses.jpg" alt="Yellow Roses" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 08</span>
+            <h3>Yellow Roses</h3>
+            <p class="medium">Oil on board, 30&Prime; &times; 40&Prime;, 2002</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="orchids.jpg" alt="Orchids" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 09</span>
+            <h3>Orchids</h3>
+            <p class="medium">Oil on board, 24&Prime; &times; 30&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="roses-glasses-wine.jpg" alt="Roses, Glasses, and Wine" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 10</span>
+            <h3>Roses, Glasses, and Wine</h3>
+            <p class="medium">Oil on board, 18&Prime; &times; 22&Prime;, 2002</p>
+            <span class="status">USD 5,000</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="glasses-fruit-wine.jpg" alt="Glass, Fruit, and Wine" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 11</span>
+            <h3>Glass, Fruit, and Wine</h3>
+            <p class="medium">Oil on canvas, 18&Prime; &times; 22&Prime;</p>
+            <span class="status">USD 5,000</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="shades-of-purple.jpg" alt="Shades of Purple" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 12</span>
+            <h3>Shades of Purple</h3>
+            <p class="medium">Oil on board, 22&Prime; &times; 24&Prime;</p>
+            <span class="status">USD 5,000</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="chardonnay.jpg" alt="Chardonnay" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 13</span>
+            <h3>Chardonnay</h3>
+            <p class="medium">Oil on canvas, 24&Prime; &times; 36&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="california-cabernet.jpg" alt="California Cab" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 14</span>
+            <h3>California Cab</h3>
+            <p class="medium">Oil on board, 60&Prime; &times; 40&Prime;, 2002</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="landscape-01.jpg" alt="Landscape 01" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 15</span>
+            <h3>Landscape 01</h3>
+            <p class="medium">Oil on canvas, 24&Prime; &times; 36&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="landscape-08.jpg" alt="Landscape 08" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 16</span>
+            <h3>Landscape 08</h3>
+            <p class="medium">Oil on canvas, 24&Prime; &times; 36&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="fall-day-at-piney-lake.jpg" alt="Fall Day at Piney Lake" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 17</span>
+            <h3>Fall Day at Piney Lake</h3>
+            <p class="medium">Oil on board, 60&Prime; &times; 40&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="beanoscabin.jpg" alt="Beano's Cabin" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 18</span>
+            <h3>Beano&rsquo;s Cabin</h3>
+            <p class="medium">Oil on board, 60&Prime; &times; 40&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="elk.jpg" alt="Bugle Boy of Company B" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 19</span>
+            <h3>Bugle Boy of Company B</h3>
+            <p class="medium">Oil on canvas, 24&Prime; &times; 36&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="fish.jpg" alt="Tight Line" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 20</span>
+            <h3>Tight Line</h3>
+            <p class="medium">Oil on board, 60&Prime; &times; 40&Prime;, 2002</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="image002-(2).jpg" alt="Long Day's Night" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 21</span>
+            <h3>Long Day&rsquo;s Night</h3>
+            <p class="medium">Oil on board, 60&Prime; &times; 40&Prime;, 2002</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="image002-(1).jpg" alt="Great Day at the Track" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 22</span>
+            <h3>Great Day at the Track</h3>
+            <p class="medium">Oil on board, 60&Prime; &times; 40&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="image001.jpg" alt="Night of the Storyteller" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 23</span>
+            <h3>Night of the Storyteller</h3>
+            <p class="medium">Oil on canvas, 24&Prime; &times; 36&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="image001-(4).jpg" alt="Anticipation" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 24</span>
+            <h3>Anticipation</h3>
+            <p class="medium">Oil on canvas, 24&Prime; &times; 36&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="image001-(3).jpg" alt="19th Hole" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 25</span>
+            <h3>19th Hole</h3>
+            <p class="medium">Oil on board, 60&Prime; &times; 40&Prime;, 2002</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="image001-(2).jpg" alt="Company Coming..." loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 26</span>
+            <h3>Company Coming&hellip;</h3>
+            <p class="medium">Oil on board, 60&Prime; &times; 40&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="image001-(1).jpg" alt="More Stories..." loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 27</span>
+            <h3>More Stories&hellip;</h3>
+            <p class="medium">Oil on canvas, 24&Prime; &times; 36&Prime;</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="PetPortrait.jpg" alt="Pet Portrait" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 28</span>
+            <h3>Pet Portrait</h3>
+            <p class="medium">Oil on canvas, 20&Prime; &times; 24&Prime;</p>
+            <span class="status commission">Private commission</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="IMG_2959.jpg" alt="Pet Portrait" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 29</span>
+            <h3>Pet Portrait</h3>
+            <p class="medium">Acrylic on canvas, 20&Prime; &times; 24&Prime;, 2025</p>
+            <span class="status commission">Private commission</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="Pet-Portrait-001.jpg" alt="Pet Portrait" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 30</span>
+            <h3>Pet Portrait</h3>
+            <p class="medium">Oil on board, 18&Prime; &times; 22&Prime;</p>
+            <span class="status commission">Private commission</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="image009.jpg" alt="Pet Portrait" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 31</span>
+            <h3>Pet Portrait</h3>
+            <p class="medium">Oil on board, 60&Prime; &times; 40&Prime;</p>
+            <span class="status commission">Private commission</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="image008.jpg" alt="Pet Portrait" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 32</span>
+            <h3>Pet Portrait</h3>
+            <p class="medium">Oil on canvas, 24&Prime; &times; 36&Prime;</p>
+            <span class="status commission">Private commission</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="image007.jpg" alt="Pet Portrait" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 33</span>
+            <h3>Pet Portrait</h3>
+            <p class="medium">Oil on canvas, 24&Prime; &times; 36&Prime;</p>
+            <span class="status commission">Private commission</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="image006.jpg" alt="Pet Portrait" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 34</span>
+            <h3>Pet Portrait</h3>
+            <p class="medium">Oil on board, 60&Prime; &times; 40&Prime;</p>
+            <span class="status commission">Private commission</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="image005.jpg" alt="Pet Portrait" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 35</span>
+            <h3>Pet Portrait</h3>
+            <p class="medium">Oil on canvas, 24&Prime; &times; 36&Prime;</p>
+            <span class="status commission">Private commission</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="image004.jpg" alt="Pet Portrait" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 36</span>
+            <h3>Pet Portrait</h3>
+            <p class="medium">Oil on board, 60&Prime; &times; 40&Prime;, 2002</p>
+            <span class="status commission">Private commission</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="image003.jpg" alt="Pet Portrait. Sorta'" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 37</span>
+            <h3>Pet Portrait. Sorta&rsquo;</h3>
+            <p class="medium">Oil on canvas, 24&Prime; &times; 36&Prime;</p>
+            <span class="status commission">Private commission</span>
+          </figcaption>
+        </figure>
+
+      </div>
+
+      <!-- Purses -->
+      <div class="section-head">
+        <span class="label">Hand-Beaded Purses<span class="count">II</span></span>
+      </div>
+
+      <div class="catalogue">
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="_NZ86667.jpg" alt="Stars and Stripes Forever, Semiquincentennial Edition" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 01</span>
+            <h3>Stars and Stripes Forever, Semiquincentennial Edition</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 850</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="imagejpeg_2.jpg" alt="Romani Elegance" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 02</span>
+            <h3>Romani Elegance</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 700</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="imagejpeg_1-1.jpg" alt="Pretty in Pink" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 03</span>
+            <h3>Pretty in Pink</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 600</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="imagejpeg_3.jpg" alt="Love is in the Air" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 04</span>
+            <h3>Love is in the Air</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 600</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="imagejpeg_3-1.jpg" alt="Grand Dame" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 05</span>
+            <h3>Grand Dame</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="imagejpeg_4.jpg" alt="Pumpkin Pie" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 06</span>
+            <h3>Pumpkin Pie</h3>
+            <p class="medium">Hand-beaded purse with semi-precious stones</p>
+            <span class="status">USD 975</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="imagejpeg_1.jpg" alt="Jade Elegance" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 07</span>
+            <h3>Jade Elegance</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 750</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="imagejpeg_2-1.jpg" alt="Tannenbaum" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 08</span>
+            <h3>Tannenbaum</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 650</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="imagejpeg_0-1.jpg" alt="Spring Grass" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 09</span>
+            <h3>Spring Grass</h3>
+            <p class="medium">Hand-beaded purse with semi-precious stones</p>
+            <span class="status">USD 850</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="imagejpeg_0.jpg" alt="Ember Sparks" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 10</span>
+            <h3>Ember Sparks</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 750</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="_NZ86684.jpg" alt="Surrender" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 11</span>
+            <h3>Surrender</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 775</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="_NZ86689.jpg" alt="When We Walked in Fields of Gold" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 12</span>
+            <h3>When We Walked in Fields of Gold</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 850</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="_NZ86679.jpg" alt="Trepidation" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 13</span>
+            <h3>Trepidation</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 700</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="_NZ86678.jpg" alt="Flapper" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 14</span>
+            <h3>Flapper</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="_NZ86676.jpg" alt="Winter Wheat" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 15</span>
+            <h3>Winter Wheat</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 800</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="_NZ86673.jpg" alt="Coral Sea" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 16</span>
+            <h3>Coral Sea</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 650</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="_NZ86671.jpg" alt="Straight Lace" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 17</span>
+            <h3>Straight Lace</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 850</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="_NZ86670.jpg" alt="Bangles and Beads" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 18</span>
+            <h3>Bangles and Beads</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 850</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="_NZ86665.jpg" alt="Are the Stars Out Tonight?" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 19</span>
+            <h3>Are the Stars Out Tonight?</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 650</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="_NZ86664.jpg" alt="Peacock's On" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 20</span>
+            <h3>Peacock&rsquo;s On</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 750</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="_NZ86660.jpg" alt="Fantasy" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 21</span>
+            <h3>Fantasy</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="_NZ86657.jpg" alt="Beyond This Point There Be Dragons" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 22</span>
+            <h3>Beyond This Point There Be Dragons</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 850</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="_NZ86655.jpg" alt="Dressed to Kill" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 23</span>
+            <h3>Dressed to Kill</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 800</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="imagejpeg_001.jpg" alt="Great Pumpkin" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 24</span>
+            <h3>Great Pumpkin</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 700</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="imagejpeg_101.jpg" alt="Wine Dark Sea" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 25</span>
+            <h3>Wine Dark Sea</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 800</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="imagejpeg_201.jpg" alt="Red Sky in the Morning" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 26</span>
+            <h3>Red Sky in the Morning</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 750</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="imagejpeg_301.jpg" alt="Winter Grass" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 27</span>
+            <h3>Winter Grass</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status">USD 650</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="purse-rose-plume.jpg" alt="Rose Plume" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 28</span>
+            <h3>Rose Plume</h3>
+            <p class="medium">Hand-beaded purse with semi-precious stones</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="purse-imperial-gold.jpg" alt="Imperial Gold" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 29</span>
+            <h3>Imperial Gold</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="purse-midnight-bronze.jpg" alt="Midnight Bronze" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 30</span>
+            <h3>Midnight Bronze</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="purse-moonflower.jpg" alt="Moonflower" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 31</span>
+            <h3>Moonflower</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="purse-sapphire-and-gold.jpg" alt="Sapphire and Gold" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 32</span>
+            <h3>Sapphire and Gold</h3>
+            <p class="medium">Hand-beaded purse</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+        <figure class="work">
+          <button class="work-frame" type="button" aria-haspopup="dialog">
+            <img src="purse-butterfly-meadow.jpg" alt="Butterfly Meadow" loading="lazy" decoding="async">
+          </button>
+          <figcaption>
+            <span class="no">No. 33</span>
+            <h3>Butterfly Meadow</h3>
+            <p class="medium">Hand-beaded purse with semi-precious stones</p>
+            <span class="status sold">Sold</span>
+          </figcaption>
+        </figure>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ——— ABOUT ——— -->
+  <section id="about" class="about">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">About the Artist</span>
+      </div>
+
+      <div class="about-grid">
+        <figure>
+          <img src="maxgigs1.jpg" alt="Maxine Orndorff Gregory sitting with her dog, Giggles" loading="lazy" decoding="async">
+          <figcaption>Maxine with her dog, Giggles</figcaption>
+        </figure>
+
+        <div>
+          <h2>Maxine Orndorff Gregory</h2>
+
+          <blockquote class="pull">
+            &ldquo;With over six decades in fine arts and textile design, I create pieces
+            rooted in tradition but shaped by contemporary life. My paintings explore
+            color relationships and texture, while my purses are functional art crafted
+            for everyday elegance.&rdquo;
+            <cite>&mdash; Maxine</cite>
+          </blockquote>
+
+          <div class="bio">
+            <p>Maxine&rsquo;s desire for creative expression seemed to exist before she picked
+            up her first drawing instrument. In early childhood her interest turned to
+            painting. She trained at the Washington School of Art in Washington, D.C.,
+            the Loveland Art Academy in Colorado, and the Scottsdale Art Academy, and
+            studied with David Leffel, Charles Cross, Terry Issac, Rod Frederick,
+            Margaret Kessler, Robert Bateman, and Quang Ho.</p>
+
+            <p>Her earliest success came in Florida in the late 1970s with paintings of
+            landscapes, seascapes, and birds, including four Florida landscapes
+            commissioned by the City of Vero Beach. Her paintings are enjoyed by art
+            lovers from the East to the West Coast.</p>
+
+            <p>In the early 1990s she moved to Colorado, where her art evolved to the
+            still lifes, landscapes, and animals that are her signature today. Still
+            life painting, her favorite, follows the style of the Old Masters with
+            modern and timeless objects; her interest in wine carries into her newest
+            series, <em>Wine &amp; Companions</em>. Her medium is oil on panel.</p>
+
+            <p>Her awards range from ribbons in regional shows to prizes in major
+            competitions: a third-place finish in the Ducks Unlimited Stamp Contest,
+            the Winsor &amp; Newton Award at the Heritage Fine Art Show, the People&rsquo;s
+            Choice Award at the Thompson Art Show, First Place in the Scottsdale Artist
+            School Show, and acceptance into the National Oil &amp; Acrylic Painters&rsquo;
+            Society Show. Festival appearances from La Quinta and Boulder to
+            Breckenridge, Beaver Creek, and the Bayou City Art Festival — along with
+            Impressions Gallery and the Turner Art Gallery in Denver — have steadily
+            grown demand among collectors.</p>
+
+            <p>Maxine&rsquo;s paintings are noted not merely for recording a scene but for
+            setting a mood: a great sense of color, combined with her sense of design,
+            creates the harmony of shapes and light that enchants viewers.</p>
+          </div>
+
+          <div class="giclee">
+            <h3>Remarqued, Artist-Proof Gicl&eacute;e Reproductions</h3>
+            <p>Gicl&eacute;e (&ldquo;zhee-clay&rdquo;) fine art reproductions have the look and feel of
+            an original work and, properly displayed, will look good for a hundred years.
+            Prints on canvas can be up to 52 inches wide and unlimited in length. Pricing
+            is according to size, unframed and unmounted — write for a specific quote.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ——— FOOTER / CONTACT ——— -->
+<footer id="contact" class="site-foot">
+  <div class="wrap">
+    <h2>Curious about a piece? Let&rsquo;s connect.</h2>
+    <p class="contact-line">
+      Email <a href="mailto:maxart@pcisys.net">maxart@pcisys.net</a>
+      &nbsp;&middot;&nbsp; Instagram
+    </p>
+    <p class="fineprint">&copy; 2026 MaxArt by Maxine Orndorff Gregory &middot; All rights reserved</p>
+  </div>
+</footer>
+
+<!-- ——— LIGHTBOX ——— -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Artwork viewer" hidden>
+  <button class="lb-btn lb-close" type="button" aria-label="Close viewer">&times;</button>
+  <button class="lb-btn lb-prev"  type="button" aria-label="Previous work">&larr;</button>
+  <img id="lb-img" src="" alt="" loading="lazy" decoding="async">
+  <div class="lb-caption">
+    <h3 id="lb-title"></h3>
+    <p id="lb-medium"></p>
+  </div>
+  <button class="lb-btn lb-next" type="button" aria-label="Next work">&rarr;</button>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var works   = Array.prototype.slice.call(document.querySelectorAll('.work'));
+  var box     = document.getElementById('lightbox');
+  var boxImg  = document.getElementById('lb-img');
+  var boxTtl  = document.getElementById('lb-title');
+  var boxMed  = document.getElementById('lb-medium');
+  var current = -1;
+  var lastFocus = null;
+
+  function show(i) {
+    if (i < 0) i = works.length - 1;
+    if (i >= works.length) i = 0;
+    current = i;
+    var fig = works[i];
+    var img = fig.querySelector('img');
+    var ttl = fig.querySelector('h3');
+    var med = fig.querySelector('.medium');
+    boxImg.src = img.getAttribute('src');
+    boxImg.alt = img.alt;
+    boxTtl.textContent = ttl ? ttl.textContent : '';
+    boxMed.textContent = med ? med.textContent : '';
+  }
+
+  function open(i) {
+    lastFocus = document.activeElement;
+    show(i);
+    box.hidden = false;
+    box.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    box.querySelector('.lb-close').focus();
+  }
+
+  function close() {
+    box.classList.remove('open');
+    box.hidden = true;
+    boxImg.src = '';
+    document.body.style.overflow = '';
+    if (lastFocus) lastFocus.focus();
+  }
+
+  works.forEach(function (fig, i) {
+    fig.querySelector('.work-frame').addEventListener('click', function () { open(i); });
+  });
+
+  box.querySelector('.lb-close').addEventListener('click', close);
+  box.querySelector('.lb-prev').addEventListener('click', function () { show(current - 1); });
+  box.querySelector('.lb-next').addEventListener('click', function () { show(current + 1); });
+
+  box.addEventListener('click', function (e) {
+    if (e.target === box) close();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (box.hidden) return;
+    if (e.key === 'Escape')     close();
+    if (e.key === 'ArrowLeft')  show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
+  });
+})();
+</script>
+
+</body>
+</html>
