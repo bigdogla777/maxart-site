@@ -1,1 +1,14 @@
-{ "version": 2 }
+{
+  "version": 2,
+  "redirects": [
+    { "source": "/concepts", "destination": "/", "permanent": true },
+    { "source": "/concept-cinematic-luxe.html", "destination": "/", "permanent": true },
+    { "source": "/concept-artisan-storybook", "destination": "/", "permanent": true },
+    { "source": "/concept-artisan-storybook.html", "destination": "/", "permanent": true },
+    { "source": "/concept-quiet-gallery", "destination": "/", "permanent": true },
+    { "source": "/concept-quiet-gallery.html", "destination": "/", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
