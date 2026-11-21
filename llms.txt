@@ -6,10 +6,10 @@ MaxArt is a solo-artist studio that provides original oil paintings and hand-bea
 
 ## Products
 
-- [Original Oil Paintings — Wine & Companions Series](https://maxart-site.vercel.app/concept-cinematic-luxe.html): A dedicated still-life series painted in oil on panel depicting glass, fruit, roses, and wine in the style of the Old Masters. Presented as Maxine's newest and signature body of work. Key features: Explicitly modeled on Old Masters still-life technique, Thematically cohesive series centered on wine and companion objects, Painted in oil on panel by a single artist with sixty years of practice.
-- [Original Oil Paintings — Still Life, Landscape, Wildlife, and Portraits](https://maxart-site.vercel.app/concept-cinematic-luxe.html): A broad catalog of original oil and acrylic paintings spanning still life, landscapes, wildlife, and commissioned pet and human portraits. Many originals are sold; availability is by inquiry. Key features: Commissioned portrait work available for pets and people, Sixty-year career spanning multiple genres and geographies, Early works held by institutional and corporate collectors including the City of Vero Beach and Yamaha Motor Corporation.
-- [Hand-Beaded Purses — The Beaded Atelier](https://maxart-site.vercel.app/concept-cinematic-luxe.html): Entirely hand-beaded purses incorporating semi-precious stones, with no two pieces alike. Positioned as wearable heirloom luxury accessories. Key features: Each purse beaded entirely by hand with thousands of individual beads, Semi-precious stones incorporated into the design, No two purses are identical — each is a singular object.
-- [Artist-Proof Giclée Reproductions and Remarqued Prints](https://maxart-site.vercel.app/concept-cinematic-luxe.html): Fine art giclée reproductions of original paintings offered when originals are no longer available. Remarqued editions include an original hand-drawn element by the artist. Key features: Artist-proof designation indicates limited, quality-controlled print runs, Remarqued editions add original hand-drawn sketches, creating hybrid collectibles, Provides access to sold-out original compositions.
+- [Original Oil Paintings — Wine & Companions Series](https://maxart-site.vercel.app/): A dedicated still-life series painted in oil on panel depicting glass, fruit, roses, and wine in the style of the Old Masters. Presented as Maxine's newest and signature body of work. Key features: Explicitly modeled on Old Masters still-life technique, Thematically cohesive series centered on wine and companion objects, Painted in oil on panel by a single artist with sixty years of practice.
+- [Original Oil Paintings — Still Life, Landscape, Wildlife, and Portraits](https://maxart-site.vercel.app/): A broad catalog of original oil and acrylic paintings spanning still life, landscapes, wildlife, and commissioned pet and human portraits. Many originals are sold; availability is by inquiry. Key features: Commissioned portrait work available for pets and people, Sixty-year career spanning multiple genres and geographies, Early works held by institutional and corporate collectors including the City of Vero Beach and Yamaha Motor Corporation.
+- [Hand-Beaded Purses — The Beaded Atelier](https://maxart-site.vercel.app/): Entirely hand-beaded purses incorporating semi-precious stones, with no two pieces alike. Positioned as wearable heirloom luxury accessories. Key features: Each purse beaded entirely by hand with thousands of individual beads, Semi-precious stones incorporated into the design, No two purses are identical — each is a singular object.
+- [Artist-Proof Giclée Reproductions and Remarqued Prints](https://maxart-site.vercel.app/): Fine art giclée reproductions of original paintings offered when originals are no longer available. Remarqued editions include an original hand-drawn element by the artist. Key features: Artist-proof designation indicates limited, quality-controlled print runs, Remarqued editions add original hand-drawn sketches, creating hybrid collectibles, Provides access to sold-out original compositions.
 
 ## Industries Served
 
@@ -56,7 +56,7 @@ MaxArt is a solo-artist studio that provides original oil paintings and hand-bea
 
 ## Evidence
 
-- No published case studies found on https://maxart-site.vercel.app/concept-cinematic-luxe.html
+- No published case studies found on https://maxart-site.vercel.app/
 
 ## Notable Customers
 

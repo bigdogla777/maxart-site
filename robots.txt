@@ -1,0 +1,6 @@
+# MaxArt — Maxine Orndorff Gregory
+# All search engines welcome (Google, Bing, Apple/Safari, DuckDuckGo, Yahoo, Yandex, AI assistants).
+User-agent: *
+Allow: /
+
+Sitemap: https://maxart-site.vercel.app/sitemap.xml
